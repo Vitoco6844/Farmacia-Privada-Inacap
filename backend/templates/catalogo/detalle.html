@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ producto.nombre }} · Farmacia{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">FICHA DE PRODUCTO</p><h1>{{ producto.nombre }}</h1><p class="intro">{{ producto.codigo }} · {{ producto.presentacion }}</p></div><a class="button" href="{% url 'catalogo:lista' %}">Volver al catálogo</a></div>
+<section class="catalog-panel form-panel" aria-label="Información del producto">
+  <dl class="detail-grid"><div><dt>Código de barras</dt><dd>{{ producto.barras }}</dd></div><div><dt>Categoría</dt><dd>{{ producto.categoria }}</dd></div><div><dt>Condición de venta</dt><dd>{{ producto.condicion }}</dd></div><div><dt>Precio</dt><dd>$ {{ producto.precio_visible }} CLP</dd></div><div><dt>Estado</dt><dd>{% if producto.activo %}Activo{% else %}Inactivo{% endif %}</dd></div><div><dt>Última actualización</dt><dd>{{ producto.actualizado|date:'d/m/Y H:i' }}</dd></div></dl>
+  {% if perms.catalogo.change_producto %}<div class="form-actions"><a class="button primary" href="{% url 'catalogo:editar' producto.pk %}">Editar producto</a></div>{% if producto.activo %}<details class="deactivation"><summary>Desactivar producto</summary><p>El producto quedará inactivo. Se conservarán su ficha y su historial.</p><form method="post" action="{% url 'catalogo:desactivar' producto.pk %}">{% csrf_token %}<button class="button danger" type="submit">Confirmar desactivación</button></form></details>{% endif %}{% endif %}
+</section>
+{% with referencia=producto.referencias.first %}{% if referencia %}<section class="catalog-panel form-panel reference-panel"><h2>Referencia de precio</h2><p>{{ referencia.farmacia }} · {{ referencia.tipo }} · $ {{ referencia.precio|floatformat:'0g' }} por envase.</p><p>Consultado el {{ referencia.consultado|date:'d/m/Y' }}. Puede variar por fecha, local o promoción. El precio aplicado en una venta es el del catálogo al confirmar.</p><p>{{ referencia.nota }}</p><a href="{{ referencia.fuente }}" target="_blank" rel="noopener noreferrer">Consultar ficha de la farmacia ↗</a></section>{% endif %}{% endwith %}
+{% if producto.condicion == 'Por verificar' %}<p class="feedback error">La condición de venta está pendiente de comprobar. Este producto no se puede vender en el prototipo.</p>{% endif %}
+{% if perms.operaciones.view_existencia %}<p class="catalog-note"><a href="{% url 'operaciones:inventario' %}?q={{ producto.codigo|urlencode }}">Consultar lotes y existencias de este producto</a></p>{% endif %}
+{% endblock %}

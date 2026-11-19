@@ -1,0 +1,62 @@
+# Entornos virtuales y dependencias locales
+.venv/
+venv/
+env/
+ENV/
+node_modules/
+
+# Python y herramientas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Credenciales y configuración privada
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+local_settings.py
+
+# Datos locales, archivos subidos y respaldos
+*.sqlite3
+*.sqlite3-journal
+*.db
+*.db-journal
+*.sql.gz
+*.dump
+*.bak
+backups/
+media/
+uploads/
+staticfiles/
+*.log
+
+# Configuración personal y temporales
+/work/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+~$*
+
+private_media/
+work/
+demo.sqlite3
+*.sqlite3
+.venv/
+.env

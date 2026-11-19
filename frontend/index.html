@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farmacia · Catálogo</title>
+  <link rel="stylesheet" href="/tema-farmacia.css">
+  <link rel="stylesheet" href="/estilos.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body class="login-body">
+  <aside id="barra-lateral" class="sidebar" aria-label="Menú principal" hidden>
+    <div class="brand"><span class="brand-icon" aria-hidden="true">✚</span><span>farmacia<span class="brand-subtitle">GESTIÓN INTEGRAL</span></span></div>
+    <div class="workspace"><span class="workspace-icon" aria-hidden="true">F</span><div>Farmacia privada<small>Sucursal principal</small></div></div>
+    <span class="nav-heading">ESPACIO DE TRABAJO</span>
+    <nav id="modulos" hidden aria-label="Módulos">
+      <button id="ir-catalogo" class="nav-item" type="button"><span aria-hidden="true">▤</span> Catálogo</button>
+      <button id="ir-inventario" class="nav-item" type="button"><span aria-hidden="true">▣</span> Inventario</button>
+      <button id="ir-compras" class="nav-item" type="button"><span aria-hidden="true">↙</span> Compras</button>
+      <div id="accesos-trabajo"></div>
+      <button id="ir-operaciones" class="nav-item" type="button"><span aria-hidden="true">▦</span> Operaciones</button>
+    </nav>
+    <span id="titulo-administracion" class="nav-heading administration" hidden>ADMINISTRACIÓN</span>
+    <nav id="accesos-administracion" aria-label="Administración" hidden></nav>
+    <div class="sidebar-footer"><span class="demo-dot"></span> Entorno académico<small>Datos ficticios para demostración</small></div>
+  </aside>
+  <div class="main-shell">
+    <header id="barra-superior" class="topbar" hidden>
+      <div class="breadcrumb">Gestión <span>/</span> <strong id="seccion-actual">Productos</strong></div>
+      <div id="cuenta" class="user" hidden>
+        <span id="avatar" class="avatar" aria-hidden="true"></span>
+        <span><span id="usuario"></span><small id="usuario-rol"></small></span>
+        <button class="button" id="salir" type="button">Cerrar sesión</button>
+      </div>
+    </header>
+  <main id="contenido">
+    <section id="acceso" class="login-card">
+      <span class="brand-icon" aria-hidden="true">✚</span>
+      <p class="eyebrow">FARMACIA · GESTIÓN INTEGRAL</p>
+      <h1>Iniciar sesión</h1>
+      <p class="intro">Ingresa con tu cuenta personal para acceder a tu espacio de trabajo.</p>
+      <form id="ingreso" method="post" action="/api/v1/sesion/ingresar/">
+        <label>Usuario<input name="username" autocomplete="username" maxlength="150" required></label>
+        <label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+        <button class="button primary" type="submit" disabled>Ingresar</button>
+      </form>
+      <p class="catalog-note">Prototipo académico. Utiliza únicamente datos ficticios.</p>
+    </section>
+    <section id="catalogo" hidden>
+      <div class="page-heading"><div><p class="eyebrow">GESTIÓN DEL CATÁLOGO</p><h1>Catálogo de productos</h1><p class="intro">Organiza y consulta los productos de tu farmacia.</p></div>
+        <button id="nuevo-producto" class="button primary" type="button" hidden>＋ Agregar producto</button>
+      </div>
+      <div class="summary" aria-label="Resumen del catálogo">
+        <article class="stat"><span class="stat-icon" aria-hidden="true">▤</span><div><span>Total de productos</span><strong id="total-productos">—</strong></div></article>
+        <article class="stat"><span class="stat-icon green" aria-hidden="true">✓</span><div><span>Productos activos</span><strong id="total-activos">—</strong></div></article>
+        <article class="stat"><span class="stat-icon amber" aria-hidden="true">▧</span><div><span>Requieren receta</span><strong id="total-receta">—</strong></div></article>
+      </div>
+      <section class="catalog-panel" aria-labelledby="listado-productos">
+        <div class="panel-title"><div><h2 id="listado-productos">Listado de productos <span id="resultado-productos" class="count"></span></h2><p>Información comercial y condiciones de venta.</p></div><span class="currency">Moneda: <strong>CLP</strong></span></div>
+        <form id="busqueda" class="filters" role="search">
+          <label class="field search-field">Buscar producto<input type="search" name="q" maxlength="100" placeholder="Nombre, código o código de barras"></label>
+          <label class="field">Categoría<select id="filtro-categoria" name="categoria"><option value="">Todas las categorías</option></select></label>
+          <label class="field">Condición de venta<select id="filtro-condicion" name="condicion"><option value="">Todas las condiciones</option></select></label>
+          <label class="field state-field" id="campo-estado">Estado<select name="estado"><option value="">Todos</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select></label>
+          <button class="button filter-button" type="submit">Filtrar</button>
+          <button class="button" id="limpiar-catalogo" type="button">Limpiar</button>
+        </form>
+        <div class="table-scroll tabla" role="region" tabindex="0" aria-label="Productos encontrados">
+        <table>
+          <thead><tr><th>Código</th><th>Producto / Presentación</th><th>Categoría</th><th>Condición de venta</th><th class="price">Precio base</th><th>Estado</th><th id="columna-editar" hidden>Acciones</th></tr></thead>
+          <tbody id="filas"></tbody>
+        </table>
+      </div>
+      <div class="paginas pagination">
+        <button class="button" id="anterior" type="button">Anterior</button><span id="pagina"></span><button class="button" id="siguiente" type="button">Siguiente</button>
+      </div>
+      </section>
+      <p class="catalog-note">ⓘ Datos de demostración. Consulta las existencias por lote en Inventario.</p>
+    </section>
+    <section id="compras" hidden>
+      <h1>Órdenes de compra</h1>
+      <button id="nueva-orden" type="button" hidden>Nueva orden</button>
+      <form id="crear-orden" class="panel" hidden>
+        <h2>Nueva orden</h2>
+        <label>Proveedor<select name="proveedor" required></select></label>
+        <label>Observaciones<input name="observaciones" maxlength="300"></label>
+        <div id="partidas-orden"></div>
+        <button id="agregar-partida" type="button">Agregar producto</button>
+        <div class="acciones"><button type="submit">Crear orden</button><button id="cancelar-orden" type="button">Cancelar</button></div>
+      </form>
+      <template id="plantilla-partida">
+        <fieldset>
+          <legend>Producto de la orden</legend>
+          <div class="campos">
+            <label>Código exacto del catálogo<input name="producto" maxlength="30" required></label>
+            <label>Envases<input name="cantidad" type="number" min="1" max="1000000" value="1" required></label>
+            <label>Costo por envase CLP<input name="costo_unitario" type="number" min="0" max="999999999999" required></label>
+          </div>
+          <button type="button" class="quitar">Quitar producto</button>
+        </fieldset>
+      </template>
+      <div class="tabla" role="region" tabindex="0" aria-label="Órdenes de compra">
+        <table><thead><tr><th>Orden</th><th>Proveedor</th><th>Estado</th><th>Total</th></tr></thead><tbody id="ordenes"></tbody></table>
+      </div>
+      <div class="paginas"><button id="compras-anterior" type="button">Anterior</button><span id="compras-pagina"></span><button id="compras-siguiente" type="button">Siguiente</button></div>
+      <section id="detalle-orden" class="panel" hidden>
+        <h2 id="titulo-orden"></h2>
+        <p id="estado-orden"></p>
+        <div class="tabla" role="region" tabindex="0" aria-label="Saldo por producto">
+          <table><thead><tr><th>Producto</th><th>Pedido</th><th>Recibido</th><th>Pendiente</th></tr></thead><tbody id="lineas-orden"></tbody></table>
+        </div>
+        <ul id="recepciones" aria-label="Recepciones registradas"></ul>
+        <button id="nueva-recepcion" type="button" hidden>Registrar recepción</button>
+        <form id="recibir-orden" hidden>
+          <h3>Recibir un lote</h3>
+          <div class="campos">
+            <label>Producto<select name="linea" required></select></label>
+            <label>Referencia de entrega<input name="referencia" maxlength="60" required></label>
+            <label>Lote<input name="codigo" maxlength="60" required></label>
+            <label>Vencimiento<input name="vencimiento" type="date" required></label>
+            <label>Ubicación<select name="ubicacion"><option value="bodega">Bodega</option><option value="vitrina">Vitrina</option></select></label>
+            <label>Envases recibidos<input name="cantidad" type="number" min="1" max="1000000" required></label>
+          </div>
+          <div class="acciones"><button type="submit">Confirmar recepción</button><button id="cancelar-recepcion" type="button">Cancelar</button></div>
+        </form>
+        <button id="ver-lote" type="button" hidden>Ver lote en inventario</button>
+        <button id="anular-orden" type="button" hidden>Anular orden</button>
+      </section>
+    </section>
+    <section id="inventario" hidden>
+      <h1>Inventario por lote</h1>
+      <form id="buscar-stock" class="campos filtros">
+        <label>Buscar<input type="search" name="q" maxlength="100" placeholder="Producto, código o lote"></label>
+        <label>Ubicación<select name="ubicacion"><option value="">Todas</option><option value="bodega">Bodega</option><option value="vitrina">Vitrina</option></select></label>
+        <button type="submit">Buscar</button>
+      </form>
+      <div class="tabla" role="region" tabindex="0" aria-label="Existencias por lote">
+        <table><thead><tr><th>Producto</th><th>Lote</th><th>Vencimiento</th><th>Ubicación</th><th>Envases</th></tr></thead><tbody id="existencias"></tbody></table>
+      </div>
+      <div class="paginas"><button id="stock-anterior" type="button">Anterior</button><span id="stock-pagina"></span><button id="stock-siguiente" type="button">Siguiente</button></div>
+    </section>
+    <section id="operaciones" hidden aria-label="Operaciones">
+      <div id="menu-operaciones"><h1>Operaciones</h1><div id="grupos-operaciones" class="grupos"></div></div>
+      <div id="pantalla-operacion" hidden>
+        <button id="volver-operaciones" type="button">Volver</button>
+        <h1 id="titulo-operacion" tabindex="-1"></h1>
+        <div id="datos-operacion"></div>
+      </div>
+    </section>
+    <p id="mensaje" role="status" aria-live="polite"></p>
+  </main>
+  <footer id="pie-pagina" class="page-footer" hidden><span>Proyecto Integrado · Farmacia privada</span><span>Prototipo académico · Datos ficticios</span></footer>
+  </div>
+</body>
+</html>

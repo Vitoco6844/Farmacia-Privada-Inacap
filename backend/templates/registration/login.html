@@ -1,0 +1,8 @@
+{% load static %}
+<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ingresar · Farmacia</title><link rel="stylesheet" href="{% static 'css/estilos.css' %}"></head>
+<body class="login-body"><main class="login-card"><span class="brand-icon" aria-hidden="true">✚</span><p class="eyebrow">FARMACIA · GESTIÓN INTEGRAL</p><h1>Inicia sesión</h1><p class="intro">Ingresa con tu cuenta personal para acceder a tu espacio de trabajo.</p>
+<form method="post" novalidate>{% csrf_token %}
+{% if form.errors %}<div class="feedback error" role="alert">No pudimos iniciar sesión. {% if response_limitada %}El ingreso está temporalmente limitado.{% else %}Revisa tus credenciales e inténtalo nuevamente.{% endif %}{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>{% endif %}
+<div class="form-field"><label for="id_username">Usuario</label><input type="text" id="id_username" name="username" value="{{ form.username.value|default:'' }}" autocomplete="username" maxlength="150" required autofocus></div>
+<div class="form-field"><label for="id_password">Contraseña</label><input type="password" id="id_password" name="password" autocomplete="current-password" required></div>
+<input type="hidden" name="next" value="{{ next }}"><button class="button primary" type="submit">Ingresar</button></form><p><a href="{% url 'password_reset' %}">Olvidé mi contraseña</a></p><p class="catalog-note">Prototipo académico. Utiliza únicamente datos ficticios.</p></main></body></html>

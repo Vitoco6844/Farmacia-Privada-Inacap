@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Farmacia · Gestión{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <aside class="sidebar" aria-label="Menú principal">
+    <a class="brand" href="{% url 'operaciones:panel' %}"><span class="brand-icon" aria-hidden="true">✚</span><span>farmacia<span class="brand-subtitle">GESTIÓN INTEGRAL</span></span></a>
+    <div class="workspace"><span class="workspace-icon" aria-hidden="true">F</span><div>Farmacia privada<small>Sucursal principal</small></div></div>
+    <span class="nav-heading">ESPACIO DE TRABAJO</span>
+    <nav>
+      {% if perms.operaciones.view_existencia %}<a class="nav-item {% if request.resolver_match.url_name == 'panel' %}selected{% endif %}" href="{% url 'operaciones:panel' %}" {% if request.resolver_match.url_name == 'panel' %}aria-current="page"{% endif %}><span aria-hidden="true">▦</span> Inicio</a>{% endif %}
+      <a class="nav-item {% if request.resolver_match.app_name == 'catalogo' %}selected{% endif %}" href="{% url 'catalogo:lista' %}" {% if request.resolver_match.app_name == 'catalogo' %}aria-current="page"{% endif %}><span aria-hidden="true">▤</span> Productos</a>
+      {% if perms.operaciones.view_existencia %}<a class="nav-item {% if request.resolver_match.url_name == 'inventario' %}selected{% endif %}" href="{% url 'operaciones:inventario' %}"><span aria-hidden="true">▣</span> Inventario</a>{% endif %}
+      {% if perms.compras.view_ordencompra %}<a class="nav-item {% if request.resolver_match.app_name == 'compras' %}selected{% endif %}" href="{% url 'compras:ordenes' %}"><span aria-hidden="true">↙</span> Compras</a>{% endif %}
+      {% if perms.operaciones.view_venta %}<a class="nav-item {% if request.resolver_match.url_name == 'ventas' %}selected{% endif %}" href="{% url 'operaciones:ventas' %}"><span aria-hidden="true">↗</span> Ventas</a>{% endif %}
+      {% if perms.comercio.operar_caja %}<a class="nav-item" href="{% url 'comercio:caja' %}"><span aria-hidden="true">▥</span> Caja</a>{% endif %}
+      {% if perms.clinica.view_receta %}<a class="nav-item" href="{% url 'clinica:recetas' %}"><span aria-hidden="true">▧</span> Recetas y entregas</a>{% endif %}
+      {% if perms.clinica.view_asientocontrolado %}<a class="nav-item" href="{% url 'clinica:controlados' %}"><span aria-hidden="true">⊕</span> Controlados</a>{% endif %}
+      {% if perms.comercio.view_convenio %}<a class="nav-item" href="{% url 'comercio:convenios' %}"><span aria-hidden="true">◇</span> Convenios</a>{% endif %}
+      {% if perms.operaciones.exportar_ventas or perms.operaciones.exportar_inventario %}<a class="nav-item {% if request.resolver_match.url_name == 'reporte_ventas' or request.resolver_match.url_name == 'reporte_inventario' %}selected{% endif %}" href="{% url 'operaciones:reportes' %}"><span aria-hidden="true">▥</span> Reportes</a>{% endif %}
+
+      {% if perms.operaciones.add_venta %}<a class="nav-item" href="{% url 'comercio:pos' %}"><span aria-hidden="true">＋</span> Punto de venta</a>{% endif %}
+      {% if perms.operaciones.exportar_ventas %}<a class="nav-item" href="{% url 'operaciones:analisis' %}"><span aria-hidden="true">▤</span> Indicadores</a>{% endif %}
+    </nav>
+    <span class="nav-heading administration">ADMINISTRACIÓN</span>
+    <nav>
+      {% if perms.gestion.administrar_usuarios %}<a class="nav-item" href="{% url 'gestion:usuarios' %}"><span aria-hidden="true">♙</span> Usuarios y permisos</a>{% endif %}
+      {% if perms.gestion.ver_auditoria %}<a class="nav-item" href="{% url 'gestion:auditoria' %}"><span aria-hidden="true">◷</span> Auditoría</a>{% endif %}
+
+      {% if perms.catalogo.add_categoria %}<a class="nav-item" href="{% url 'gestion:categorias' %}"><span aria-hidden="true">▦</span> Categorías</a>{% endif %}
+      {% if perms.gestion.administrar_precios %}<a class="nav-item" href="{% url 'gestion:precios' %}"><span aria-hidden="true">$</span> Precios y descuentos</a>{% endif %}
+      {% if perms.gestion.configurar_alertas %}<a class="nav-item" href="{% url 'gestion:alertas' %}"><span aria-hidden="true">◉</span> Alertas por ubicación</a>{% endif %}
+      {% if perms.gestion.revisar_condicion %}<a class="nav-item" href="{% url 'gestion:condiciones' %}"><span aria-hidden="true">✓</span> Revisión de productos</a>{% endif %}
+    </nav>
+    <div class="sidebar-footer"><span class="demo-dot"></span> Entorno académico<small>Datos ficticios para demostración</small></div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div class="breadcrumb">Gestión <span>/</span> <strong>{% block seccion %}Productos{% endblock %}</strong></div><div class="user"><span class="avatar" aria-hidden="true">{{ user.username|slice:':2'|upper }}</span><span>{{ user.get_full_name|default:user.username }}<small>{% for grupo in user.groups.all %}{{ grupo.name }}{% if not forloop.last %} · {% endif %}{% empty %}Cuenta individual{% endfor %}</small></span><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="button" type="submit">Salir</button></form></div></header>
+    <main id="contenido" tabindex="-1">{% for message in messages %}<div class="feedback {{ message.tags }}" role="status">{{ message }}</div>{% endfor %}{% block content %}{% endblock %}</main>
+    <footer class="page-footer"><span>Proyecto Integrado · Farmacia privada</span><span>Prototipo académico · Datos ficticios</span></footer>
+  </div>
+  <dialog id="aviso"><form method="dialog"><span class="dialog-eyebrow">EN DESARROLLO</span><h2>Vamos paso a paso</h2><p id="aviso-texto"></p><button class="button primary">Entendido</button></form></dialog>
+  <script src="{% static 'js/interfaz.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}{{ titulo }} · Farmacia{% endblock %}
+{% block seccion %}Gestión{% endblock %}
+{% block content %}{% if volver == 'gestion:usuarios' %}<link rel="stylesheet" href="{% static 'css/revision-modulos.css' %}">{% endif %}
+<div class="page-heading"><div><p class="eyebrow">GESTIÓN</p><h1>{{ titulo }}</h1><p class="intro">Los cambios quedan registrados en la auditoría.</p></div><a class="button" href="{% url volver %}">Volver</a></div>
+<section class="catalog-panel form-panel"><form method="post" novalidate>{% csrf_token %}
+{% if form.errors %}<div class="feedback error" role="alert">Revisa los campos indicados. {{ form.non_field_errors }}</div>{% endif %}
+<div class="form-grid">{% for field in form %}<div class="form-field {% if field.name == 'grupos' %}seleccion-roles{% endif %}">{% if field.name == 'grupos' %}<fieldset><legend>{{ field.label }}</legend>{{ field }}<p class="field-help">{{ field.help_text }}</p>{{ field.errors }}</fieldset>{% else %}<label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>{{ field }}<div class="field-help">{{ field.help_text }}</div>{{ field.errors }}{% endif %}</div>{% endfor %}</div>
+<div class="form-actions"><button class="button primary">Guardar cambios</button><a class="button" href="{% url volver %}">Cancelar</a></div>
+</form></section>{% endblock %}

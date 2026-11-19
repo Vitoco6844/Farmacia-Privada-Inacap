@@ -1,0 +1,20 @@
+Creating test database for alias 'default'...
+
+.....................................................................................................................................No se pudieron consultar los indicadores del panel.
+................No se pudo consultar o generar el reporte solicitado.
+...................................
+----------------------------------------------------------------------
+Ran 184 tests in 42.447s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 184 test(s).
+System check identified no issues (0 silenced).
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+HTTP 8015: admin_demo consultó 21 pantallas autorizadas.
+HTTP 8015: vendedor_demo consultó 8 pantallas autorizadas.
+HTTP 8015: qf_demo consultó 11 pantallas autorizadas.
+HTTP 8015: tecnico_demo consultó 7 pantallas autorizadas.

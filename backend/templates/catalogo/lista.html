@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo de productos · Farmacia{% endblock %}
+{% block content %}
+  <div class="page-heading"><div><p class="eyebrow">GESTIÓN DEL CATÁLOGO</p><h1>Catálogo de productos</h1><p class="intro">Organiza y consulta los productos de tu farmacia.</p></div>{% if perms.catalogo.add_producto %}<a class="button primary" href="{% url 'catalogo:crear' %}"><span aria-hidden="true">＋</span> Agregar producto</a>{% endif %}</div>
+  <section class="summary" aria-label="Resumen del catálogo completo">
+    <article class="stat"><span class="stat-icon" aria-hidden="true">▤</span><div><span>Total de productos</span><strong>{{ total|stringformat:'02d' }}</strong></div><small>Catálogo completo</small></article>
+    <article class="stat"><span class="stat-icon green" aria-hidden="true">✓</span><div><span>Productos activos</span><strong>{{ activos|stringformat:'02d' }}</strong></div><small>Habilitados en catálogo</small></article>
+    <article class="stat"><span class="stat-icon amber" aria-hidden="true">▧</span><div><span>Requieren receta</span><strong>{{ con_receta|stringformat:'02d' }}</strong></div><small>Según condición registrada</small></article>
+  </section>
+  <section class="catalog-panel" aria-labelledby="list-title">
+    <div class="panel-title"><div><h2 id="list-title">Listado de productos <span class="count">{{ pagina.paginator.count }}</span></h2><p>Información comercial y condiciones de venta.</p></div><span class="currency">Moneda: <strong>CLP</strong></span></div>
+    <form class="filters" method="get" action="{% url 'catalogo:lista' %}" role="search" aria-label="Buscar productos">
+      <div class="field search-field"><label for="q">Buscar producto</label><input id="q" name="q" type="search" value="{{ q }}" placeholder="Nombre, código o código de barras"></div>
+      <div class="field"><label for="categoria">Categoría</label><select name="categoria" id="categoria"><option value="">Todas las categorías</option>{% for c in categorias %}<option {% if categoria == c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="condicion">Condición de venta</label><select name="condicion" id="condicion"><option value="">Todas las condiciones</option>{% for c in condiciones %}<option {% if condicion == c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></div>
+      <div class="field state-field"><label for="estado">Estado</label><select name="estado" id="estado"><option value="">Todos</option><option value="activo" {% if estado == 'activo' %}selected{% endif %}>Activo</option><option value="inactivo" {% if estado == 'inactivo' %}selected{% endif %}>Inactivo</option></select></div>
+      <button class="button filter-button" type="submit">Filtrar</button>
+      {% if q or categoria or condicion or estado %}<a class="clear" href="{% url 'catalogo:lista' %}">Limpiar</a>{% endif %}
+    </form>
+    <div class="table-scroll" role="region" aria-label="Productos del catálogo" tabindex="0">
+    <table><thead><tr><th scope="col">Código</th><th scope="col">Producto / Presentación</th><th scope="col">Categoría</th><th scope="col">Condición de venta</th><th scope="col" class="price">Precio</th><th scope="col">Estado</th><th scope="col" class="actions-title">Acciones</th></tr></thead><tbody>
+    {% for p in pagina %}<tr>
+      <td class="code">{{ p.codigo }}</td>
+      <td><div class="product"><span class="product-icon {% if p.categoria.nombre == 'Insumos' %}blue{% endif %}" aria-hidden="true">{{ p.iniciales }}</span><div><strong>{{ p.nombre }}</strong><small>{{ p.presentacion }}</small></div></div></td>
+      <td>{{ p.categoria }}</td><td><span class="condition {% if p.condicion != 'Venta directa' %}prescription{% endif %}">{{ p.condicion }}</span></td>
+      <td class="price">$ {{ p.precio_visible }}</td><td><span class="status {% if not p.activo %}inactive{% endif %}"><span aria-hidden="true">●</span> {% if p.activo %}Activo{% else %}Inactivo{% endif %}</span></td>
+      <td><div class="actions"><a href="{% url 'catalogo:detalle' p.pk %}" aria-label="Ver detalle de {{ p.nombre }}">Ver</a>{% if perms.catalogo.change_producto %}<a href="{% url 'catalogo:editar' p.pk %}" aria-label="Editar {{ p.nombre }}">Editar</a>{% endif %}</div></td>
+    </tr>{% empty %}<tr><td colspan="7" class="empty"><strong>No encontramos productos</strong><p>Prueba con otro nombre o cambia los filtros seleccionados.</p><a href="{% url 'catalogo:lista' %}">Ver todos los productos</a></td></tr>{% endfor %}
+    </tbody></table></div>
+    <div class="pagination"><span>{% if pagina.paginator.count %}Mostrando <strong>{{ pagina.start_index }}–{{ pagina.end_index }}</strong> de <strong>{{ pagina.paginator.count }}</strong> productos{% else %}0 productos{% endif %}</span><nav aria-label="Páginas del catálogo">{% if pagina.has_previous %}<a href="?{{ params }}&pagina={{ pagina.previous_page_number }}" aria-label="Página anterior">‹</a>{% else %}<span class="disabled" aria-disabled="true">‹</span>{% endif %}{% for n in pagina.paginator.page_range %}<a href="?{{ params }}&pagina={{ n }}" {% if pagina.number == n %}class="current" aria-current="page"{% endif %}>{{ n }}</a>{% endfor %}{% if pagina.has_next %}<a href="?{{ params }}&pagina={{ pagina.next_page_number }}" aria-label="Página siguiente">›</a>{% else %}<span class="disabled" aria-disabled="true">›</span>{% endif %}</nav></div>
+  </section>
+  <p class="catalog-note"><span aria-hidden="true">ⓘ</span> Stock de demostración. Consulta los lotes en Inventario y las fuentes de precios en cada ficha. {% if por_verificar %}{{ por_verificar }} productos con condición pendiente están bloqueados para venta.{% endif %}</p>
+{% endblock %}

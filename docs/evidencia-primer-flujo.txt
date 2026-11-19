@@ -1,0 +1,13 @@
+Creating test database for alias 'default'...
+
+...........................................
+----------------------------------------------------------------------
+Ran 43 tests in 28.604s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 43 test(s).
+System check identified no issues (0 silenced).
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+Prueba HTTP desde frontend: ingreso con CSRF, catálogo (13 productos visibles), filtro por código, salida y catálogo bloqueado con 401.

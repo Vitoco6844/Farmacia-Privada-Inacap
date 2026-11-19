@@ -1,0 +1,716 @@
+Creating test database for alias 'default'...
+
+............................EEEEEEEEE.........................................................................................No se pudieron consultar los indicadores del panel.
+................No se pudo consultar o generar el reporte solicitado.
+...................................
+======================================================================
+ERROR: test_impresion_usa_datos_congelados (clinica.tests.EntregaTests.test_impresion_usa_datos_congelados)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_no_entrega_sin_revision (clinica.tests.EntregaTests.test_no_entrega_sin_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_pantallas_y_descarga_privada (clinica.tests.EntregaTests.test_pantallas_y_descarga_privada)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_parcial_saldo_y_exceso (clinica.tests.EntregaTests.test_parcial_saldo_y_exceso)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_productos_duplicados_se_acumulan (clinica.tests.EntregaTests.test_productos_duplicados_se_acumulan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_qf_sin_permiso_no_revisa (clinica.tests.EntregaTests.test_qf_sin_permiso_no_revisa)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_sin_saldo_definido_se_registra_expresamente (clinica.tests.EntregaTests.test_sin_saldo_definido_se_registra_expresamente)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_tercero_necesita_autorizacion (clinica.tests.EntregaTests.test_tercero_necesita_autorizacion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+======================================================================
+ERROR: test_vencida_rechaza_sin_cambiar_saldo (clinica.tests.EntregaTests.test_vencida_rechaza_sin_cambiar_saldo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+psycopg.OperationalError: the connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\vimat\Desktop\Clases\2do sm\Nueva carpeta\Farmacia\backend\clinica\tests.py", line 14, in setUp
+    self.u = get_user_model().objects.create_user('qf')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 175, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\models.py", line 163, in _create_user
+    user.save(using=self._db)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\models\sql\compiler.py", line 1880, in execute_sql
+    with self.connection.cursor() as cursor:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 297, in _cursor
+    with self.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\base\base.py", line 298, in _cursor
+    return self._prepare_cursor(self.create_cursor(name))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\django\db\backends\postgresql\base.py", line 429, in create_cursor
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\connection.py", line 231, in cursor
+    self._check_connection_ok()
+  File "C:\Users\vimat\Documents\ChatGPT\Proyecto Integrado\.venv-pi\Lib\site-packages\psycopg\_connection_base.py", line 528, in _check_connection_ok
+    raise e.OperationalError("the connection is closed")
+django.db.utils.OperationalError: the connection is closed
+
+----------------------------------------------------------------------
+Ran 177 tests in 44.365s
+
+FAILED (errors=9)
+Destroying test database for alias 'default'...
+
+Found 177 test(s).
+System check identified no issues (0 silenced).
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.

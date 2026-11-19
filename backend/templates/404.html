@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página no encontrada · Farmacia</title>
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <span class="brand-icon" aria-hidden="true">✚</span>
+    <p class="eyebrow">ERROR 404</p>
+    <h1>No encontramos esta página</h1>
+    <p class="intro">El enlace no existe o el registro ya no está disponible.</p>
+    {% if user.is_authenticated %}
+      <a class="button primary" href="{% url 'operaciones:panel' %}">Volver al inicio</a>
+    {% else %}
+      <a class="button primary" href="{% url 'login' %}">Ir a iniciar sesión</a>
+    {% endif %}
+  </main>
+</body>
+</html>

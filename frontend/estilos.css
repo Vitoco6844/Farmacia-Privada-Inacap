@@ -1,0 +1,71 @@
+[hidden] { display: none !important; }
+button:disabled { opacity: .5; cursor: default; }
+main { min-width: 0; }
+.login-body .main-shell { margin: 0; width: min(100%, 460px); }
+.login-body main { padding: 0; }
+.login-body .login-card { max-width: none; }
+#ingreso { display: grid; gap: 16px; }
+#ingreso label { display: grid; gap: 7px; }
+#ingreso button { justify-content: center; }
+#mensaje:empty { display: none; }
+#mensaje { margin-top: 16px; }
+#modulos, #accesos-trabajo, #accesos-administracion { min-width: 0; }
+.sidebar .nav-item[aria-current="page"] { background: #e8f3ed; color: var(--green-dark); font-weight: 700; }
+.sidebar .nav-item:hover { color: var(--green-dark); }
+#usuario-rol:empty { display: none; }
+.user, .breadcrumb { min-width: 0; }
+.breadcrumb strong { overflow-wrap: anywhere; }
+#catalogo .summary .stat { min-width: 0; }
+#catalogo td .product { white-space: normal; min-width: 12rem; }
+#catalogo .pagination { flex-wrap: wrap; }
+#catalogo .stat strong { font-variant-numeric: tabular-nums; }
+#catalogo .filters label { display: grid; gap: 5px; }
+#catalogo .filters label input, #catalogo .filters label select { width: 100%; }
+.tabla { overflow: auto; min-width: 0; }
+.tabla table { min-width: 34rem; }
+#compras > .tabla, #inventario > .tabla, #datos-operacion > .tabla { background: white; border: 1px solid var(--line); border-radius: 11px; }
+#compras > h1, #inventario > h1, #menu-operaciones > h1, #pantalla-operacion > h1 { margin-bottom: 18px; }
+.panel { margin: 18px 0; padding: clamp(16px, 3vw, 24px); background: white; border: 1px solid var(--line); border-radius: 11px; }
+.panel h2, #datos-operacion h2 { margin: 0 0 13px; font-size: 17px; }
+.panel h3 { margin: 4px 0; }
+#contenido button:not(.button) { min-height: 35px; padding: 7px 13px; border: 1px solid #d7e4dc; border-radius: 7px; background: white; color: var(--green-dark); font-weight: 600; }
+#contenido button[type="submit"]:not(.button), #contenido #nueva-orden { background: var(--green); color: white; border-color: var(--green); }
+#contenido button:hover:not(:disabled):not(.primary) { border-color: var(--green); }
+#contenido :is(#compras, #inventario, #operaciones) form { display: grid; gap: 14px; }
+#contenido :is(.panel, #buscar-stock) label { display: grid; gap: 6px; min-width: 0; font-weight: 600; }
+#contenido :is(.panel, #buscar-stock, .carrito) :is(input, select, textarea) { min-width: 0; width: 100%; padding: 9px 11px; border: 1px solid #ccd8d0; border-radius: 8px; font: inherit; color: var(--ink); background: white; }
+#contenido input[type="checkbox"] { width: 18px; height: 18px; }
+#contenido input[type="file"] { max-width: 100%; }
+#contenido select[multiple] { min-height: 6rem; }
+#contenido label small { color: var(--muted); font-weight: 400; }
+.campos, .grupos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 13px; align-items: end; }
+.grupos { align-items: start; }
+.grupos .panel { margin: 0; }
+.acciones, .paginas { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.paginas { justify-content: space-between; padding: 12px 0; }
+.catalog-panel .pagination { padding: 12px 18px; }
+fieldset { min-width: 0; border: 1px solid var(--line); border-radius: 8px; margin: 0 0 10px; padding: 12px; }
+.quitar, #nueva-orden, #volver-operaciones, #buscar-stock { margin-bottom: 12px; }
+fieldset .quitar { margin: 10px 0 0; }
+#detalle-orden form, #datos-operacion > .tabla, #datos-operacion > .acciones { margin: 12px 0; }
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: 12px; margin: 12px 0; }
+.resumen div { background: white; border: 1px solid var(--line); border-radius: 9px; padding: 14px; }
+.resumen dt { color: var(--muted); }
+.resumen dd { margin: 5px 0 0; overflow-wrap: anywhere; font-weight: 650; }
+.carrito { display: grid; gap: 9px; }
+#contenido .carrito input[type="number"] { width: 6rem; }
+@media (max-width: 520px) {
+  .sidebar { padding-bottom: 12px; }
+  .sidebar #modulos, .sidebar #accesos-administracion { display: flex; flex-wrap: nowrap; overflow-x: auto; }
+  .sidebar #accesos-administracion { margin-top: 5px; }
+  #accesos-trabajo { display: contents; }
+  #catalogo .summary { grid-template-columns: 1fr; }
+  #catalogo .summary .stat { padding: 10px 14px; }
+  #catalogo .filters .button { width: 100%; justify-content: center; }
+  .user > span:not(.avatar) { display: none; }
+}
+@media print {
+  #volver-operaciones, #mensaje, #datos-operacion button, #datos-operacion form { display: none !important; }
+  .tabla { overflow: visible; }
+  .tabla table { min-width: 0; }
+}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}{{ titulo }} · Farmacia{% endblock %}
+{% block seccion %}{{ titulo }}{% endblock %}
+{% block content %}<link rel="stylesheet" href="{% static 'css/revision-modulos.css' %}"><div class="revision-modulo">
+<div class="page-heading"><div><p class="eyebrow">GESTIÓN</p><h1>{{ titulo }}</h1><p class="intro">{% if crear == 'gestion:categoria_crear' %}Organiza los productos en categorías para facilitar su búsqueda.{% else %}Configura el stock mínimo y los avisos de vencimiento por producto y ubicación.{% endif %}</p></div>{% if crear != 'gestion:categoria_crear' or perms.catalogo.add_categoria %}<a class="button primary" href="{% url crear %}">{% if crear == 'gestion:categoria_crear' %}Agregar categoría{% else %}Configurar alerta{% endif %}</a>{% endif %}</div>
+<section class="catalog-panel"><div class="table-wrap" tabindex="0" role="region" aria-label="{{ titulo }}"><table><thead><tr>{% for e in encabezados %}<th scope="col">{{ e }}</th>{% endfor %}</tr></thead><tbody>
+{% for nombre, url in filas %}<tr><td>{{ nombre }}</td><td>{% if crear != 'gestion:categoria_crear' or perms.catalogo.change_categoria %}<a class="button" href="{{ url }}">Editar</a>{% else %}Solo consulta{% endif %}</td></tr>{% empty %}<tr><td colspan="2">{% if crear == 'gestion:categoria_crear' %}Todavía no hay categorías registradas.{% else %}Todavía no hay alertas configuradas por ubicación.{% endif %}</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% if estados %}<h2>Situación actual</h2><p>Stock disponible excluye lotes bloqueados y vencidos. Se incluyen vencidos en la alerta de vencimiento.</p>
+{% for e in estados %}<section class="catalog-panel form-panel"><h3>{{ e.config.producto }} · {{ e.config.get_ubicacion_display }}</h3><p>Disponible: {{ e.disponible }} envases · Mínimo: {{ e.config.stock_minimo }} · Aviso: {{ e.config.dias_vencimiento }} días. {% if e.bajo %}<strong>Stock bajo: reponer.</strong>{% else %}Sobre el umbral configurado.{% endif %}</p>
+{% for x in e.vencimientos %}<p>Lote {{ x.lote.codigo }} · Vence {{ x.lote.vencimiento|date:'d/m/Y' }} · {{ x.cantidad }} envases</p>{% empty %}<p>Sin lotes dentro del horizonte de vencimiento.</p>{% endfor %}</section>{% endfor %}{% endif %}
+</div>{% endblock %}

@@ -1,0 +1,14 @@
+Creating test database for alias 'default'...
+
+..............................................................................................................................No se pudieron consultar los indicadores del panel.
+................No se pudo consultar o generar el reporte solicitado.
+...................................
+----------------------------------------------------------------------
+Ran 177 tests in 42.137s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 177 test(s).
+System check identified no issues (0 silenced).
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.

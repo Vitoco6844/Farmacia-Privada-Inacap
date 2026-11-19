@@ -1,0 +1,14 @@
+Creating test database for alias 'default'...
+
+.......................................
+----------------------------------------------------------------------
+Ran 39 tests in 5.397s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 39 test(s).
+System check identified no issues (0 silenced).
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+HTTP local 8015: HTML y modulo JS servidos, compras bloqueado sin sesion, ingreso y consulta de ordenes, proveedores activos e inventario verificados.

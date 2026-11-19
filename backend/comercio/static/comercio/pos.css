@@ -1,0 +1,12 @@
+/* Punto de venta: productos y cobro apilados a todo el ancho. */
+#pos > .commerce-grid{grid-template-columns:minmax(0,1fr)}
+#pos .commerce-grid{align-items:start}
+#pos .commerce-card{min-width:0}
+#pos .commerce-totals{padding:18px 0;border-top:1px solid #dfe7e5;border-bottom:1px solid #dfe7e5}
+#pos #total{font-size:24px;font-weight:700;color:#11594b}
+#pos #confirmar{width:100%;justify-content:center;margin-top:24px}
+#pos button:disabled{opacity:.55;cursor:not-allowed}
+#pos #vacio{padding:24px 16px;background:#f4f9f7;border-radius:8px;text-align:center;color:#53665b}
+#pos #resultados:not(:empty){margin-top:12px;max-height:270px;overflow-y:auto}
+#pos .table-wrap:focus-visible,#pos button:focus-visible{outline:3px solid #167461;outline-offset:3px}
+@media(max-width:520px){#pos .commerce-card{padding:18px}#pos .commerce-search{flex-wrap:wrap}#pos .commerce-search input{min-width:0;flex:1 1 180px}#pos .commerce-search .button{flex:1}}

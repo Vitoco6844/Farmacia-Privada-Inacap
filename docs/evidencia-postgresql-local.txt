@@ -1,0 +1,132 @@
+PostgreSQL local listo en 127.0.0.1:55432. Credenciales guardadas en .env, excluido de Git.
+46 objects imported automatically (use -v 2 for details).
+
+Operations to perform:
+  Apply all migrations: admin, auth, catalogo, clinica, comercio, compras, contenttypes, gestion, operaciones, seguridad, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying catalogo.0001_initial... OK
+  Applying catalogo.0002_precioreferencia_and_more... OK
+  Applying catalogo.0003_producto_stock_minimo... OK
+  Applying operaciones.0001_initial... OK
+  Applying operaciones.0002_alter_existencia_options_alter_venta_options_and_more... OK
+  Applying clinica.0001_initial... OK
+  Applying clinica.0002_remove_lineareceta_clinica_saldo_coherente_and_more... OK
+  Applying operaciones.0003_alter_eventoreporte_tipo... OK
+  Applying comercio.0001_initial... OK
+  Applying comercio.0002_eventocomercial... OK
+  Applying compras.0001_initial... OK
+  Applying compras.0002_alter_ordencompra_options... OK
+  Applying gestion.0001_initial... OK
+  Applying seguridad.0001_initial... OK
+  Applying sessions.0001_initial... OK
+Roles de cat�logo, inventario, venta, reportes y compras configurados. No se crearon cuentas.
+8 productos ficticios creados.
+6 medicamentos a�adidos; referencias del 2026-10-19.
+24 ingresos ficticios a�adidos. Los vencidos no pueden venderse.
+Proveedores ficticios preparados. Sin �rdenes ni ingresos autom�ticos.
+Cuentas listas. Las claves nuevas est�n en work/accesos-locales.txt (no versionado).
+System check identified no issues (0 silenced).
+No changes detected
+Creating test database for alias 'default' ('test_farmacia')...
+
+Found 29 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: messages, staticfiles
+  Apply all migrations: admin, auth, catalogo, clinica, comercio, compras, contenttypes, gestion, operaciones, seguridad, sessions
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying catalogo.0001_initial... OK
+  Applying catalogo.0002_precioreferencia_and_more... OK
+  Applying catalogo.0003_producto_stock_minimo... OK
+  Applying operaciones.0001_initial... OK
+  Applying operaciones.0002_alter_existencia_options_alter_venta_options_and_more... OK
+  Applying clinica.0001_initial... OK
+  Applying clinica.0002_remove_lineareceta_clinica_saldo_coherente_and_more... OK
+  Applying operaciones.0003_alter_eventoreporte_tipo... OK
+  Applying comercio.0001_initial... OK
+  Applying comercio.0002_eventocomercial... OK
+  Applying compras.0001_initial... OK
+  Applying compras.0002_alter_ordencompra_options... OK
+  Applying gestion.0001_initial... OK
+  Applying seguridad.0001_initial... OK
+test_administrador_crea_y_registra_actor (catalogo.tests.CatalogoTests.test_administrador_crea_y_registra_actor) ... ok
+test_anonimo_debe_ingresar (catalogo.tests.CatalogoTests.test_anonimo_debe_ingresar) ... ok
+test_base_impide_condicion_invalida (catalogo.tests.CatalogoTests.test_base_impide_condicion_invalida) ... ok
+test_base_impide_precio_negativo (catalogo.tests.CatalogoTests.test_base_impide_precio_negativo) ... ok
+test_codigo_y_barras_duplicados_rechazados (catalogo.tests.CatalogoTests.test_codigo_y_barras_duplicados_rechazados) ... ok
+test_credenciales_invalidas_no_crean_sesion (catalogo.tests.CatalogoTests.test_credenciales_invalidas_no_crean_sesion) ... ok
+test_csrf_en_creacion_y_salida (catalogo.tests.CatalogoTests.test_csrf_en_creacion_y_salida) ... ok
+test_cuenta_inactiva_no_ingresa (catalogo.tests.CatalogoTests.test_cuenta_inactiva_no_ingresa) ... ok
+test_cuenta_sin_rol_denegada (catalogo.tests.CatalogoTests.test_cuenta_sin_rol_denegada) ... ok
+test_datos_invalidos_rechazados (catalogo.tests.CatalogoTests.test_datos_invalidos_rechazados) ... ok
+test_desactivacion_post_idempotente_con_historial (catalogo.tests.CatalogoTests.test_desactivacion_post_idempotente_con_historial) ... ok
+test_detalle_inexistente (catalogo.tests.CatalogoTests.test_detalle_inexistente) ... ok
+test_edicion_persistente_con_historial_y_condicion_preservada (catalogo.tests.CatalogoTests.test_edicion_persistente_con_historial_y_condicion_preservada) ... ok
+test_error_de_auditoria_revierte_producto (catalogo.tests.CatalogoTests.test_error_de_auditoria_revierte_producto) ... ok
+test_filtros_busqueda_y_paginacion (catalogo.tests.CatalogoTests.test_filtros_busqueda_y_paginacion) ... ok
+test_historial_impide_borrado_de_producto_o_actor (catalogo.tests.CatalogoTests.test_historial_impide_borrado_de_producto_o_actor) ... ok
+test_ingreso_valido_y_expiracion (catalogo.tests.CatalogoTests.test_ingreso_valido_y_expiracion) ... ok
+test_no_redirige_a_sitio_externo_al_ingresar (catalogo.tests.CatalogoTests.test_no_redirige_a_sitio_externo_al_ingresar) ... ok
+test_salir_requiere_post_y_revoca_sesion (catalogo.tests.CatalogoTests.test_salir_requiere_post_y_revoca_sesion) ... ok
+test_semilla_no_sobrescribe_y_roles_no_escalan (catalogo.tests.CatalogoTests.test_semilla_no_sobrescribe_y_roles_no_escalan) ... ok
+test_sin_resultados_y_escape (catalogo.tests.CatalogoTests.test_sin_resultados_y_escape) ... ok
+test_vendedor_consulta_sin_controles_de_edicion (catalogo.tests.CatalogoTests.test_vendedor_consulta_sin_controles_de_edicion) ... ok
+test_vendedor_no_puede_mutar_por_url_ni_post (catalogo.tests.CatalogoTests.test_vendedor_no_puede_mutar_por_url_ni_post) ... ok
+test_doble_confirmacion_mismo_actor_una_venta (operaciones.tests.test_concurrencia.ConcurrenciaPostgreSQLTests.test_doble_confirmacion_mismo_actor_una_venta) ... ok
+test_doble_ingreso_mismo_formulario_una_cantidad (operaciones.tests.test_concurrencia.ConcurrenciaPostgreSQLTests.test_doble_ingreso_mismo_formulario_una_cantidad) ... ok
+test_dos_vendedores_solo_una_ultima_unidad (operaciones.tests.test_concurrencia.ConcurrenciaPostgreSQLTests.test_dos_vendedores_solo_una_ultima_unidad) ... ok
+test_dos_recepciones_no_superan_saldo (compras.tests.test_concurrencia.RecepcionConcurrenteTests.test_dos_recepciones_no_superan_saldo) ... ok
+test_reenvio_concurrente_mismo_actor (compras.tests.test_concurrencia.RecepcionConcurrenteTests.test_reenvio_concurrente_mismo_actor) ... ok
+test_referencia_repetida_entre_actores (compras.tests.test_concurrencia.RecepcionConcurrenteTests.test_referencia_repetida_entre_actores) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 5.141s
+
+OK
+Destroying test database for alias 'default' ('test_farmacia')...
+
+  Applying sessions.0001_initial... OK
+System check identified no issues (0 silenced).
+46 objects imported automatically (use -v 2 for details).
+
+Base y versi�n: ('farmacia', '17.11')
+Tablas: 50
+Grupos: 4
+Productos: 14
+Ingreso Django: HTTP 200 en 127.0.0.1:8014

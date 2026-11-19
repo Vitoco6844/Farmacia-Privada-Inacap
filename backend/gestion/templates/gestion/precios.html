@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}Precios y límites · Farmacia{% endblock %}
+{% block seccion %}Precios{% endblock %}
+{% block content %}<link rel="stylesheet" href="{% static 'css/revision-modulos.css' %}"><div class="revision-modulo">
+<div class="page-heading"><div><p class="eyebrow">GESTIÓN COMERCIAL</p><h1>Precios y límites</h1><p class="intro">Consulta el precio vigente de cada producto y configura sus límites de descuento.</p></div><a class="button primary" href="{% url 'gestion:precio_crear' %}">Programar precio</a></div>
+<section class="catalog-panel"><div class="table-wrap" tabindex="0" role="region" aria-label="Precios y programación"><table><thead><tr><th scope="col">Producto</th><th scope="col">Precio vigente CLP</th><th scope="col">Cenabast</th><th scope="col">Descuento máximo</th><th scope="col">Acción</th></tr></thead><tbody>
+{% for fila in productos %}<tr><td>{{ fila.producto }}</td><td>$ {{ fila.vigente|floatformat:'0g' }}</td><td>{% if fila.politica.aplica_cenabast %}Tope $ {{ fila.politica.precio_maximo|floatformat:'0g' }}{% else %}No aplica{% endif %}</td><td>{{ fila.politica.descuento_maximo|default:'0' }}%</td><td><a class="button" href="{% url 'gestion:politica_editar' fila.producto.pk %}">Configurar límites</a></td></tr>{% empty %}<tr><td colspan="5">Crea un producto para configurar precios.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<p class="catalog-note">Las fechas de inicio y fin están incluidas. Si coinciden varias programaciones, se aplica la de inicio más reciente; en empate, la última registrada. El precio respeta el tope Cenabast cuando esté habilitado.</p><h2>Historial de programación</h2><p>Últimos 100 registros. Los programas se conservan; registra uno nuevo para reemplazar su vigencia.</p>
+<section class="catalog-panel"><div class="table-wrap" tabindex="0" role="region" aria-label="Precios y programación"><table><thead><tr><th scope="col">Producto</th><th scope="col">Precio CLP</th><th scope="col">Desde / hasta</th><th scope="col">Fuente</th><th scope="col">Responsable</th></tr></thead><tbody>
+{% for p in historial %}<tr><td>{{ p.producto }}</td><td>$ {{ p.precio|floatformat:'0g' }}</td><td>{{ p.desde|date:'d/m/Y' }} / {% if p.hasta %}{{ p.hasta|date:'d/m/Y' }}{% else %}Sin fecha final{% endif %}</td><td>{{ p.fuente }}</td><td>{{ p.usuario }}</td></tr>{% empty %}<tr><td colspan="5">Sin programas. Se usa el precio base del catálogo, sujeto al tope configurado.</td></tr>{% endfor %}
+</tbody></table></div></section></div>{% endblock %}
