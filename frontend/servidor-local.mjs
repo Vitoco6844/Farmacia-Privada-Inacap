@@ -6,7 +6,10 @@ const port = 8015;
 const archivos = new Map([
   ["/", ["index.html", "text/html; charset=utf-8"]],
   ["/estilos.css", ["estilos.css", "text/css; charset=utf-8"]],
-  ["/tema-farmacia.css", ["tema-farmacia.css", "text/css; charset=utf-8"]],
+  // Estilos y tema compartidos: una sola fuente en el backend, sin copias en esta carpeta.
+  ["/tema-oscuro.css", ["../backend/static/css/tema-oscuro.css", "text/css; charset=utf-8"]],
+  ["/tema.js", ["../backend/static/js/tema.js", "text/javascript; charset=utf-8"]],
+  ["/tema-farmacia.css", ["../backend/static/css/estilos.css", "text/css; charset=utf-8"]],
   ["/app.js", ["app.js", "text/javascript; charset=utf-8"]],
   ["/compras.js", ["compras.js", "text/javascript; charset=utf-8"]],
   ["/operaciones.js", ["operaciones.js", "text/javascript; charset=utf-8"]],

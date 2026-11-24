@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from compras.forms import AnularForm
 from compras.models import OrdenCompra
@@ -36,8 +37,8 @@ def formulario_anular(request, c):
 
 def alertas_stock(request, c):
     p = c['pagina']
-    return listado(['Código', 'Producto', 'Disponible', 'Stock mínimo'],
-                   ([o.codigo, o.nombre, o.disponible, o.stock_minimo] for o in p), p)
+    return listado(['Código', 'Producto', 'Disponible', 'Stock mínimo', 'Motivo'],
+                   ([o.codigo, o.nombre, o.disponible, o.stock_minimo, o.motivo] for o in p), p)
 
 
 def movimientos(request, c):
@@ -144,3 +145,47 @@ def venta(request, c):
                    ([o.nombre, o.codigo, o.cantidad, o.precio_unitario,
                      ', '.join(f'{a.lote.codigo} ({a.cantidad})' for a in o.asignaciones.all())] for o in v.detalles.all()),
                    resumen=[['Venta', v.pk], ['Fecha', v.fecha], ['Total CLP', v.total]], enlaces=enlaces)
+
+
+def _clp(valor):
+    return '$ ' + f'{int(valor or 0):,}'.replace(',', '.')
+
+
+def panel(request, c):
+    """Turno de hoy para el frontend: mismos indicadores y gráficos que el Inicio de Django."""
+    resumen = []
+    graficos = []
+    if c.get('ver_comercial'):
+        resumen += [['Ventas de hoy', c['ventas_hoy']], ['Importe vendido hoy', _clp(c['importe_hoy'])]]
+        horas = c['horas']
+        graficos.append(dict(
+            tipo='columnas', titulo='Ventas por hora',
+            nota=f"Hoy · la hora más fuerte fue {c['pico']['rango']}" if c['pico'] else 'Hoy',
+            vacio='Todavía no hay ventas hoy. Cuando se confirme la primera aparecerá aquí, hora por hora.',
+            items=[dict(etiqueta=h['etiqueta'], alto=h['alto'], destacado=False,
+                        tip=f"{h['rango']} · {_clp(h['total'])} · {h['cantidad']} ventas") for h in horas],
+            tabla=tabla(['Hora', 'Ventas', 'Monto'], ([h['rango'], h['cantidad'], _clp(h['total'])] for h in horas))))
+        dias = c['dias']
+        graficos.append(dict(
+            tipo='columnas', titulo='Última semana', nota='Hoy destacado; los demás días en tono suave', semana=True,
+            items=[dict(etiqueta=d['etiqueta'], alto=d['alto'], destacado=d['es_hoy'], valor=_clp(d['total']) if d['es_hoy'] else '',
+                        tip=f"{d['etiqueta']} {d['dia']:%d/%m} · {_clp(d['total'])} · {d['cantidad']} ventas") for d in dias],
+            tabla=tabla(['Día', 'Ventas', 'Monto'], ([f"{d['etiqueta']} {d['dia']:%d/%m}", d['cantidad'], _clp(d['total'])] for d in dias))))
+    resumen += [['Productos bajo mínimo', c['bajos_total']], ['Lotes próximos a vencer', c['proximos_total']],
+                ['Lotes no utilizables por fecha', c['vencidos_total']]]
+    graficos.append(dict(tipo='segmentos', titulo='Estado de la vitrina', nota='Productos activos según su stock vigente en vitrina',
+                         items=[dict(clave=s['clave'], nombre=s['nombre'], cantidad=s['cantidad'], detalle=s['detalle'])
+                                for s in c['vitrina']]))
+    if c.get('ver_comercial'):
+        graficos.append(dict(tipo='barras', titulo='Cómo pagaron hoy', nota='El efectivo es lo que debe cuadrar en caja',
+                             vacio='Sin pagos registrados hoy. Abre tu caja y confirma una venta para ver aquí cómo pagan los clientes.'
+                             if not c['importe_hoy'] else '',
+                             items=[dict(nombre=p['nombre'], ancho=p['ancho'], valor=_clp(p['total']), porcentaje=p['porcentaje'])
+                                    for p in c['pagos']]))
+    tablas = [tabla(['Producto', 'Disponible', 'Mínimo', 'Motivo'], ([p.nombre, p.disponible, p.stock_minimo, p.motivo] for p in c['bajos']),
+                    'Reposición prioritaria'),
+              tabla(['Producto / lote', 'Vence', 'Envases'],
+                    ([f'{l.producto.nombre} · {l.codigo}', l.vencimiento.strftime('%d/%m/%Y'), l.envases] for l in c['proximos']),
+                    'Vencimientos próximos')]
+    return dict(resumen=resumen, graficos=graficos, tablas=tablas,
+                nota=f"Actualizado a las {timezone.localtime(c['actualizado']):%H:%M} · hora de Santiago.")

@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ingresar · Farmacia</title><link rel="stylesheet" href="{% static 'css/estilos.css' %}"></head>
+<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ingresar · Farmacia</title><link rel="stylesheet" href="{% static 'css/estilos.css' %}"><link rel="stylesheet" href="{% static 'css/tema-oscuro.css' %}"><script src="{% static 'js/tema.js' %}"></script></head>
 <body class="login-body"><main class="login-card"><span class="brand-icon" aria-hidden="true">✚</span><p class="eyebrow">FARMACIA · GESTIÓN INTEGRAL</p><h1>Inicia sesión</h1><p class="intro">Ingresa con tu cuenta personal para acceder a tu espacio de trabajo.</p>
 <form method="post" novalidate>{% csrf_token %}
 {% if form.errors %}<div class="feedback error" role="alert">No pudimos iniciar sesión. {% if response_limitada %}El ingreso está temporalmente limitado.{% else %}Revisa tus credenciales e inténtalo nuevamente.{% endif %}{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>{% endif %}

@@ -85,8 +85,12 @@ def nueva_recepcion(request, pk):
             else:
                 messages.success(request, 'Recepción registrada e inventario actualizado.')
                 return redirect('compras:recepcion_detalle', pk=recepcion.pk)
+    # Una orden completa o anulada no admite recepciones: se informa en lugar de ofrecer un formulario
+    # que siempre sería rechazado. Los envíos (POST) siguen pasando por el servicio para conservar
+    # la idempotencia de un reintento que completó la orden.
+    abierta = orden.estado in (OrdenCompra.Estado.PENDIENTE, OrdenCompra.Estado.PARCIAL)
     return render(request, 'compras/formulario.html', {'form': form, 'lineas': lineas, 'tipo': 'recepcion', 'orden': orden,
-        'titulo': f'Recibir orden OC-{pk}', 'introduccion': 'Registra únicamente los envases efectivamente entregados. Puedes repartir un producto entre varios lotes o ubicaciones.'})
+        'mostrar_formulario': abierta or form.is_bound, 'titulo': f'Recibir orden OC-{pk}', 'introduccion': 'Registra únicamente los envases efectivamente entregados. Puedes repartir un producto entre varios lotes o ubicaciones.'})
 
 
 @login_required

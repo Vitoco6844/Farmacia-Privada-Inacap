@@ -39,6 +39,9 @@ def editar_producto(request, c):
     if p and p.activo:
         datos['formularios'].append(formulario('Desactivar producto', [], ruta=f'producto-desactivar/{p.pk}',
                                              confirmar='¿Desactivar este producto?'))
+    elif p:
+        datos['formularios'].append(formulario('Reactivar producto', [], ruta=f'producto-reactivar/{p.pk}',
+                                             confirmar='¿Reactivar este producto?'))
     return datos
 
 
@@ -71,6 +74,7 @@ def buscar_pos(request):
 
 
 RUTAS = {
+    'panel': Pantalla('Turno de hoy', 'operaciones.view_existencia', operaciones.panel, op.panel, 'Turno'),
     'proveedores': Pantalla('Proveedores', 'compras.view_proveedor', compras.proveedores, op.proveedores, 'Compras e inventario'),
     'proveedor-nuevo': Pantalla('Nuevo proveedor', 'compras.add_proveedor', compras.nuevo_proveedor, escribir=True),
     'proveedor-editar/<int:pk>': Pantalla('Editar proveedor', 'compras.change_proveedor', compras.editar_proveedor, escribir=True),
@@ -100,6 +104,7 @@ RUTAS = {
     'producto-nuevo': Pantalla('Nuevo producto', 'catalogo.add_producto', catalogo.crear, editar_producto, escribir=True),
     'producto-editar/<int:pk>': Pantalla('Editar producto', 'catalogo.change_producto', catalogo.editar, editar_producto, escribir=True),
     'producto-desactivar/<int:pk>': Pantalla('Desactivar producto', 'catalogo.change_producto', catalogo.desactivar, escribir=True),
+    'producto-reactivar/<int:pk>': Pantalla('Reactivar producto', 'catalogo.change_producto', catalogo.reactivar, escribir=True),
     'categorias': Pantalla('Categorías', 'catalogo.view_categoria', gestion.categorias, ges.categorias, 'Administración'),
     'categoria-nueva': Pantalla('Nueva categoría', 'catalogo.add_categoria', gestion.categoria_editar, escribir=True),
     'categoria-editar/<int:pk>': Pantalla('Editar categoría', 'catalogo.change_categoria', gestion.categoria_editar, escribir=True),

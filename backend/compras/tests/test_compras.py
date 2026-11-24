@@ -255,6 +255,24 @@ class ComprasTests(TestCase):
         self.assertEqual(Recepcion.objects.count(), 1)
         self.assertEqual(Existencia.objects.get().cantidad, 20)
 
+    def test_formulario_recepcion_oculto_en_orden_completa_o_anulada(self):
+        self.client.force_login(self.admin)
+        abierta = self.orden()
+        respuesta = self.client.get(f'/compras/ordenes/{abierta.pk}/recibir/')
+        self.assertContains(respuesta, 'Registrar recepción')
+        self.assertNotContains(respuesta, 'no admite nuevas recepciones')
+        completa = self.orden(clave=uuid.uuid4())
+        self.recibir(completa, 20)
+        anulada = self.orden(clave=uuid.uuid4())
+        anular_orden(usuario=self.admin, orden_id=anulada.pk, motivo='Proveedor sin disponibilidad')
+        for orden in (completa, anulada):
+            with self.subTest(estado=orden.estado):
+                respuesta = self.client.get(f'/compras/ordenes/{orden.pk}/recibir/')
+                self.assertEqual(respuesta.status_code, 200)
+                self.assertContains(respuesta, 'no admite nuevas recepciones')
+                self.assertNotContains(respuesta, 'Registrar recepción')
+                self.assertNotContains(respuesta, 'partidas-TOTAL_FORMS')
+
     def test_token_invalido_no_crea_orden(self):
         self.client.force_login(self.admin)
         respuesta = self.client.post('/compras/nueva/', {'token': 'alterado'})

@@ -16,7 +16,7 @@ function mensaje(texto = "") {
 }
 
 const accesos = [
-  ["ventas", "↗", "Ventas"], ["caja", "▥", "Caja"], ["recetas", "▧", "Recetas y entregas"],
+  ["panel", "✚", "Turno de hoy"], ["ventas", "↗", "Ventas"], ["caja", "▥", "Caja"], ["recetas", "▧", "Recetas y entregas"],
   ["controlados", "⊕", "Controlados"], ["convenios", "◇", "Convenios"],
   [["reporte-ventas", "reporte-inventario", "reporte-compras"], "▥", "Reportes"],
   ["pos", "＋", "Punto de venta"], ["indicadores", "▤", "Indicadores"],

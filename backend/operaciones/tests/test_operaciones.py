@@ -12,9 +12,10 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils import timezone
 from catalogo.models import Categoria, Producto
-from operaciones.forms import IngresoForm, VentaForm
+from comercio.services import abrir_caja, confirmar_venta
+from operaciones.forms import IngresoForm, TrasladoForm
 from operaciones.models import DetalleVenta, Existencia, Lote, Movimiento, Venta
-from operaciones.services import confirmar_venta, registrar_ingreso, transferir
+from operaciones.services import registrar_ingreso, transferir
 
 
 class OperacionesTests(TestCase):
@@ -40,9 +41,13 @@ class OperacionesTests(TestCase):
                 (cls.largo, 'bodega', 20), (cls.vencido, 'vitrina', 40), (cls.hoy, 'vitrina', 40), (cls.bloqueado, 'vitrina', 40)]:
             Existencia.objects.create(lote=lote, ubicacion=ubicacion, cantidad=cantidad)
 
-    def venta(self, **datos):
-        return confirmar_venta(**{'usuario': self.vendedor, 'producto_id': self.producto.pk,
-            'cantidad': 5, 'clave': uuid.uuid4(), **datos})
+    def setUp(self):
+        self.caja = abrir_caja(usuario=self.vendedor, fondo=0)
+
+    def venta(self, *, usuario=None, cantidad=5, clave=None):
+        # Única ruta de venta de la aplicación: el punto de venta de comercio (antes existía una «venta rápida»).
+        return confirmar_venta(usuario=usuario or self.vendedor, items=[{'producto_id': self.producto.pk, 'cantidad': cantidad}],
+            clave=clave or uuid.uuid4(), caja_id=self.caja.pk)
 
     def ingreso(self, **datos):
         return registrar_ingreso(**{'usuario': self.admin, 'producto_id': self.producto.pk,
@@ -111,7 +116,7 @@ class OperacionesTests(TestCase):
             self.venta()
 
     def test_fallo_movimiento_revierte_venta_y_stock(self):
-        with patch('operaciones.services.Movimiento.objects.create', side_effect=IntegrityError):
+        with patch('comercio.services.Movimiento.objects.create', side_effect=IntegrityError):
             with self.assertRaises(IntegrityError):
                 self.venta()
         self.assertEqual(Venta.objects.count(), 0)
@@ -170,18 +175,18 @@ class OperacionesTests(TestCase):
             self.venta()
 
     def test_formulario_firmado_por_usuario_tipo_y_contenido(self):
-        token = VentaForm(usuario=self.vendedor, tipo='venta').initial['token']
-        datos = {'producto': self.producto.pk, 'cantidad': 1, 'token': token}
-        self.assertTrue(VentaForm(datos, usuario=self.vendedor, tipo='venta').is_valid())
-        self.assertFalse(VentaForm(datos, usuario=self.admin, tipo='venta').is_valid())
-        self.assertFalse(IngresoForm(datos, usuario=self.vendedor, tipo='ingreso').is_valid())
-        self.assertFalse(VentaForm({**datos, 'token': token + 'x'}, usuario=self.vendedor, tipo='venta').is_valid())
+        token = TrasladoForm(usuario=self.tecnico, tipo='traslado').initial['token']
+        datos = {'lote': self.largo.pk, 'origen': 'bodega', 'destino': 'vitrina', 'cantidad': 1, 'token': token}
+        self.assertTrue(TrasladoForm(datos, usuario=self.tecnico, tipo='traslado').is_valid())
+        self.assertFalse(TrasladoForm(datos, usuario=self.admin, tipo='traslado').is_valid())
+        self.assertFalse(IngresoForm(datos, usuario=self.tecnico, tipo='ingreso').is_valid())
+        self.assertFalse(TrasladoForm({**datos, 'token': token + 'x'}, usuario=self.tecnico, tipo='traslado').is_valid())
 
     def test_post_venta_y_reintento_por_http(self):
         import json
         from comercio.services import abrir_caja
         self.client.force_login(self.vendedor)
-        caja = abrir_caja(usuario=self.vendedor, fondo=0)
+        caja = self.caja
         url = reverse('operaciones:nueva_venta')
         clave = str(self.client.get(url).context['clave'])
         datos = {'items': json.dumps([{'producto_id': self.producto.pk, 'cantidad': 2}]),
@@ -197,7 +202,7 @@ class OperacionesTests(TestCase):
         import json
         from comercio.services import abrir_caja
         self.client.force_login(self.vendedor)
-        caja = abrir_caja(usuario=self.vendedor, fondo=0)
+        caja = self.caja
         url = reverse('operaciones:nueva_venta')
         clave = str(self.client.get(url).context['clave'])
         items = json.dumps([{'producto_id': self.producto.pk, 'cantidad': 100}])
@@ -228,7 +233,7 @@ class OperacionesTests(TestCase):
     def test_csrf_impide_confirmar_venta(self):
         client = Client(enforce_csrf_checks=True)
         client.force_login(self.vendedor)
-        token = VentaForm(usuario=self.vendedor, tipo='venta').initial['token']
-        r = client.post(reverse('operaciones:nueva_venta'), {'producto': self.producto.pk, 'cantidad': 1, 'token': token})
+        r = client.post(reverse('operaciones:nueva_venta'), {'items': '[{"producto_id": %d, "cantidad": 1}]' % self.producto.pk,
+                                                              'clave': str(uuid.uuid4()), 'caja_id': self.caja.pk, 'medio': 'efectivo'})
         self.assertEqual(r.status_code, 403)
         self.assertEqual(Venta.objects.count(), 0)

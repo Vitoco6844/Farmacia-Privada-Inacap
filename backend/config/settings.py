@@ -69,7 +69,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PRIVATE_MEDIA_ROOT = BASE_DIR / 'private_media'
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+# En desarrollo local, sin servidor SMTP configurado, los correos (p. ej. recuperación de contraseña) se guardan
+# como archivos en work/correos para poder abrirlos. En despliegue se debe definir EMAIL_BACKEND y EMAIL_HOST.
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND') or (
+    'django.core.mail.backends.filebased.EmailBackend' if DEBUG and not os.environ.get('EMAIL_HOST')
+    else 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_FILE_PATH = BASE_DIR / 'work' / 'correos'
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'true').lower() == 'true'

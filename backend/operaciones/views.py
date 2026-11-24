@@ -9,9 +9,9 @@ import logging
 from django.shortcuts import get_object_or_404, redirect
 from config.respuestas import render
 from django.utils import timezone
-from .forms import IngresoForm, TrasladoForm, VentaForm
+from .forms import IngresoForm, TrasladoForm
 from .models import Existencia, Movimiento, Ubicacion, Venta
-from .services import confirmar_venta, registrar_ingreso, transferir
+from .services import registrar_ingreso, transferir
 from .indicadores import construir_panel, productos_bajo_minimo
 
 logger = logging.getLogger(__name__)
@@ -75,13 +75,9 @@ def _formulario(request, clase, tipo, titulo, intro):
             if tipo == 'ingreso':
                 registrar_ingreso(usuario=request.user, producto_id=datos['producto'].pk, codigo=datos['codigo'],
                     vencimiento=datos['vencimiento'], ubicacion=datos['ubicacion'], cantidad=datos['cantidad'], clave=datos['token'])
-            elif tipo == 'traslado':
+            else:
                 transferir(usuario=request.user, lote_id=datos['lote'].pk, origen=datos['origen'], destino=datos['destino'],
                     cantidad=datos['cantidad'], clave=datos['token'])
-            else:
-                venta = confirmar_venta(usuario=request.user, producto_id=datos['producto'].pk,
-                    cantidad=datos['cantidad'], clave=datos['token'])
-                return redirect('operaciones:venta_detalle', pk=venta.pk)
         except ValidationError as error:
             form.add_error(None, error)
         else:

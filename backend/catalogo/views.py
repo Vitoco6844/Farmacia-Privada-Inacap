@@ -54,7 +54,8 @@ def detalle(request, pk):
 
 
 def formulario(request, producto=None):
-    form = ProductoForm(request.POST if request.method == 'POST' else None, instance=producto)
+    puede = request.user.groups.filter(name='Químico Farmacéutico').exists() and request.user.has_perm('gestion.revisar_condicion')
+    form = ProductoForm(request.POST if request.method == 'POST' else None, instance=producto, puede_definir_condicion=puede)
     if request.method == 'POST' and form.is_valid():
         try:
             with transaction.atomic():
@@ -95,4 +96,20 @@ def desactivar(request, pk):
             EventoCatalogo.objects.create(producto=producto, usuario=request.user, accion='desactivar',
                 anterior=anterior, posterior=snapshot(producto))
     messages.success(request, 'Producto inactivo. Se conserva su historial.')
+    return redirect('catalogo:detalle', pk=pk)
+
+
+@login_required
+@permission_required('catalogo.change_producto', raise_exception=True)
+@require_POST
+def reactivar(request, pk):
+    with transaction.atomic():
+        producto = get_object_or_404(Producto.objects.select_for_update(), pk=pk)
+        if not producto.activo:
+            anterior = snapshot(producto)
+            producto.activo = True
+            producto.save(update_fields=['activo', 'actualizado'])
+            EventoCatalogo.objects.create(producto=producto, usuario=request.user, accion='reactivar',
+                anterior=anterior, posterior=snapshot(producto))
+    messages.success(request, 'Producto reactivado. Vuelve a estar disponible según su condición de venta y su stock.')
     return redirect('catalogo:detalle', pk=pk)

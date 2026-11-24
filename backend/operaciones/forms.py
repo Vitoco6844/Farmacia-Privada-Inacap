@@ -1,6 +1,7 @@
 import uuid
 from django import forms
 from django.core import signing
+from django.utils import timezone
 from catalogo.models import Producto
 from .models import Lote, Ubicacion
 
@@ -31,7 +32,17 @@ class IngresoForm(OperacionForm):
     codigo = forms.CharField(max_length=60, label='Código de lote')
     vencimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'), input_formats=['%Y-%m-%d'], label='Fecha de vencimiento')
     ubicacion = forms.ChoiceField(choices=Ubicacion.choices, label='Ubicación')
-    field_order = ['producto', 'codigo', 'vencimiento', 'ubicacion', 'cantidad', 'token']
+    confirmar_vencido = forms.BooleanField(required=False, label='Confirmo que registro un lote vencido o que vence hoy',
+        help_text='Solo para dejar constancia de stock vencido encontrado. Ese lote no se podrá vender ni trasladar.')
+    field_order = ['producto', 'codigo', 'vencimiento', 'ubicacion', 'cantidad', 'confirmar_vencido', 'token']
+
+    def clean(self):
+        datos = super().clean()
+        vencimiento = datos.get('vencimiento')
+        if vencimiento and vencimiento <= timezone.localdate() and not datos.get('confirmar_vencido'):
+            self.add_error('vencimiento', 'La fecha indica un lote vencido o que vence hoy. Revisa la fecha o marca la '
+                                          'confirmación para registrarlo como stock no vendible.')
+        return datos
 
 
 class TrasladoForm(OperacionForm):
@@ -39,21 +50,3 @@ class TrasladoForm(OperacionForm):
     origen = forms.ChoiceField(choices=Ubicacion.choices)
     destino = forms.ChoiceField(choices=Ubicacion.choices)
     field_order = ['lote', 'origen', 'destino', 'cantidad', 'token']
-
-
-class ProductoVentaSelect(forms.Select):
-    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
-        opcion = super().create_option(name, value, label, selected, index, subindex, attrs)
-        if value and hasattr(value, 'instance'):
-            opcion['attrs']['data-precio'] = str(value.instance.precio)
-        return opcion
-
-
-class ProductoVentaChoice(forms.ModelChoiceField):
-    def label_from_instance(self, producto):
-        return f'{producto.codigo} · {producto.nombre} · {producto.presentacion} · $ {producto.precio_visible} CLP'
-
-
-class VentaForm(OperacionForm):
-    producto = ProductoVentaChoice(queryset=Producto.objects.filter(activo=True, condicion=Producto.Condicion.DIRECTA), widget=ProductoVentaSelect)
-    field_order = ['producto', 'cantidad', 'token']

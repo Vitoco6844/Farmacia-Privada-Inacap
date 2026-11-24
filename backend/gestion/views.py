@@ -164,6 +164,23 @@ def alerta_editar(request, pk=None):
     return formulario(request, form, 'Configurar alerta', 'gestion:alertas', guardar)
 
 
+def referencia_evento(evento, campos, modelo):
+    """Identifica el registro afectado sin exponer JSON, datos clínicos ni credenciales."""
+    if 'referencia' in campos and evento.referencia:
+        return evento.referencia
+    if 'producto' in campos and evento.producto_id:
+        return f'Producto {evento.producto.codigo}'
+    if 'orden' in campos and evento.orden_id:
+        return f'Orden OC-{evento.orden_id}'
+    if 'proveedor' in campos and evento.proveedor_id:
+        return f'Proveedor {evento.proveedor.codigo}'
+    if 'receta' in campos and evento.receta_id:
+        return f'Receta #{evento.receta_id}'
+    if 'tipo' in campos and 'formato' in campos:
+        return f'Reporte {evento.tipo} ({evento.formato})'
+    return f'{modelo._meta.verbose_name} #{evento.pk}'
+
+
 @login_required
 @permission_required('gestion.ver_auditoria', raise_exception=True)
 def auditoria(request):
@@ -187,7 +204,7 @@ def auditoria(request):
             campos = {f.name for f in modelo._meta.fields}
             if not modelo.__name__.startswith('Evento') or 'fecha' not in campos:
                 continue
-            qs = modelo.objects.filter(**fechas)
+            qs = modelo.objects.filter(**fechas).select_related(*[c for c in ('producto', 'proveedor') if c in campos])
             campo_actor = next((c for c in ('usuario', 'actor') if c in campos), None)
             if campo_actor:
                 qs = qs.select_related(campo_actor)
@@ -200,7 +217,7 @@ def auditoria(request):
                 identidad = getattr(e, campo_actor).get_username() if campo_actor and getattr(e, campo_actor) else 'Cuenta seudonimizada'
                 accion = next((str(getattr(e, c)) for c in ('accion', 'resultado', 'tipo') if c in campos), 'Actualización')
                 eventos.append({'fecha': e.fecha, 'modulo': app, 'actor': identidad, 'accion': accion,
-                    'referencia': f'{modelo._meta.verbose_name} #{e.pk}'})
+                    'referencia': referencia_evento(e, campos, modelo)})
     eventos.sort(key=lambda e: e['fecha'], reverse=True)
     return render(request, 'gestion/auditoria.html', {'pagina': Paginator(eventos, 40).get_page(request.GET.get('pagina')),
         'modulos': modulos, 'modulo': modulo, 'actor': actor, 'desde': desde, 'hasta': hasta})
