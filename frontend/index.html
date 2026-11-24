@@ -6,6 +6,8 @@
   <title>Farmacia · Catálogo</title>
   <link rel="stylesheet" href="/tema-farmacia.css">
   <link rel="stylesheet" href="/estilos.css">
+  <link rel="stylesheet" href="/tema-oscuro.css">
+  <script src="/tema.js"></script>
   <script src="/app.js" type="module"></script>
 </head>
 <body class="login-body">
@@ -30,6 +32,7 @@
       <div id="cuenta" class="user" hidden>
         <span id="avatar" class="avatar" aria-hidden="true"></span>
         <span><span id="usuario"></span><small id="usuario-rol"></small></span>
+        <button class="tema-toggle" type="button" data-tema-toggle><span class="tema-icono" aria-hidden="true"></span><span class="tema-texto">Modo nocturno</span></button>
         <button class="button" id="salir" type="button">Cerrar sesión</button>
       </div>
     </header>
@@ -45,6 +48,7 @@
         <button class="button primary" type="submit" disabled>Ingresar</button>
       </form>
       <p class="catalog-note">Prototipo académico. Utiliza únicamente datos ficticios.</p>
+      <button class="tema-toggle" type="button" data-tema-toggle><span class="tema-icono" aria-hidden="true"></span><span class="tema-texto">Modo nocturno</span></button>
     </section>
     <section id="catalogo" hidden>
       <div class="page-heading"><div><p class="eyebrow">GESTIÓN DEL CATÁLOGO</p><h1>Catálogo de productos</h1><p class="intro">Organiza y consulta los productos de tu farmacia.</p></div>

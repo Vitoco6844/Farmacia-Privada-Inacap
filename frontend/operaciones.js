@@ -217,6 +217,128 @@ function montarCarrito(form, api, alError, confirmar) {
   return () => Array.from(carrito.values(), (o) => ({ producto_id: o.id, cantidad: o.cantidad }));
 }
 
+// Gráficos del panel del turno. Usan las mismas clases que el Inicio de Django (estilos compartidos).
+function grafico(spec) {
+  const panel = crear("section");
+  panel.className = "catalog-panel grafico";
+  const cabecera = crear("div");
+  cabecera.className = "panel-title";
+  const textos = crear("div");
+  textos.append(crear("h2", spec.titulo));
+  if (spec.nota) textos.append(crear("p", spec.nota));
+  cabecera.append(textos);
+  panel.append(cabecera);
+  // Columnas: vacío si no hay puntos. Barras: el backend envía «vacio» solo cuando no hubo pagos.
+  const vacio = spec.tipo === "columnas" ? !spec.items.length : spec.tipo === "barras" && Boolean(spec.vacio);
+  if (vacio && spec.vacio) {
+    const aviso = crear("p", spec.vacio);
+    aviso.className = "grafico-vacio";
+    panel.append(aviso);
+    return panel;
+  }
+  if (spec.tipo === "columnas") {
+    const lista = crear("div");
+    lista.className = "grafico-columnas" + (spec.semana ? " semana" : "");
+    lista.setAttribute("role", "list");
+    lista.setAttribute("aria-label", spec.titulo);
+    for (const item of spec.items) {
+      const columna = crear("div");
+      columna.className = "columna" + (item.destacado ? " destacada" : "");
+      columna.setAttribute("role", "listitem");
+      columna.tabIndex = 0;
+      columna.setAttribute("aria-label", item.tip);
+      const tip = crear("span", item.tip);
+      tip.className = "columna-tip";
+      columna.append(tip);
+      if (item.valor) {
+        const valor = crear("span", item.valor);
+        valor.className = "columna-valor";
+        valor.style.bottom = `calc(${item.alto}% + 4px)`;
+        columna.append(valor);
+      }
+      const barra = crear("span");
+      barra.className = "columna-barra";
+      barra.style.height = `${item.alto}%`;
+      const eje = crear("span", item.etiqueta);
+      eje.className = "columna-eje";
+      columna.append(barra, eje);
+      lista.append(columna);
+    }
+    panel.append(lista);
+  } else if (spec.tipo === "segmentos") {
+    const barra = crear("div");
+    barra.className = "grafico-segmentos";
+    barra.setAttribute("role", "list");
+    barra.setAttribute("aria-label", spec.titulo);
+    const leyenda = crear("ul");
+    leyenda.className = "grafico-leyenda";
+    const marcas = { ok: "✓", bajo: "!", agotado: "×" };
+    for (const item of spec.items) {
+      if (item.cantidad) {
+        const segmento = crear("div");
+        segmento.className = `segmento estado-${item.clave}`;
+        segmento.setAttribute("role", "listitem");
+        segmento.tabIndex = 0;
+        segmento.style.flexGrow = item.cantidad;
+        segmento.setAttribute("aria-label", `${item.nombre}: ${item.cantidad} productos`);
+        const tip = crear("span", `${item.nombre} (${item.cantidad}): ${item.detalle}`);
+        tip.className = "columna-tip";
+        segmento.append(tip);
+        barra.append(segmento);
+      }
+      const fila = crear("li");
+      const marca = crear("span", marcas[item.clave]);
+      marca.className = `marca estado-${item.clave}`;
+      marca.setAttribute("aria-hidden", "true");
+      fila.append(marca, crear("strong", String(item.cantidad)), ` ${item.nombre}`, crear("small", item.detalle));
+      leyenda.append(fila);
+    }
+    panel.append(barra, leyenda);
+  } else if (spec.tipo === "barras") {
+    const lista = crear("ul");
+    lista.className = "grafico-barras";
+    for (const item of spec.items) {
+      const fila = crear("li");
+      fila.tabIndex = 0;
+      fila.setAttribute("aria-label", `${item.nombre}: ${item.valor}, ${item.porcentaje} por ciento`);
+      const pista = crear("span");
+      pista.className = "barra-pista";
+      const relleno = crear("span");
+      relleno.className = "barra-relleno";
+      relleno.style.width = `${item.ancho}%`;
+      pista.append(relleno);
+      const nombre = crear("span", item.nombre);
+      nombre.className = "barra-nombre";
+      const valor = crear("span", `${item.valor} `);
+      valor.className = "barra-valor";
+      valor.append(crear("small", `${item.porcentaje}%`));
+      fila.append(nombre, pista, valor);
+      lista.append(fila);
+    }
+    panel.append(lista);
+  }
+  if (spec.tabla?.filas?.length) {
+    const datos = crear("details");
+    datos.className = "grafico-datos";
+    datos.append(crear("summary", "Ver datos como tabla"));
+    const tablaDatos = crear("table");
+    const cabeza = crear("tr");
+    for (const columna of spec.tabla.columnas) cabeza.append(crear("th", columna));
+    const thead = crear("thead");
+    thead.append(cabeza);
+    const tbody = crear("tbody");
+    for (const filaDatos of spec.tabla.filas) {
+      const fila = crear("tr");
+      for (const celda of filaDatos) fila.append(crear("td", valor(celda)));
+      tbody.append(fila);
+    }
+    tablaDatos.append(thead, tbody);
+    datos.append(tablaDatos);
+    panel.append(datos);
+  }
+  return panel;
+}
+
 export function iniciarOperaciones({ api, mensaje, mostrarError, mostrarModulo }) {
   const menu = $("menu-operaciones");
   const pantalla = $("pantalla-operacion");
@@ -281,6 +403,13 @@ export function iniciarOperaciones({ api, mensaje, mostrarError, mostrarModulo }
         contenido.append(enlaces);
       }
       for (const spec of datos.formularios || []) contenido.append(formulario(spec, ruta));
+      if (datos.graficos?.length) {
+        const zona = crear("section");
+        zona.className = "graficos-turno";
+        zona.setAttribute("aria-label", "Gráficos del turno");
+        for (const spec of datos.graficos) zona.append(grafico(spec));
+        contenido.append(zona);
+      }
       for (const datosTabla of datos.tablas || []) {
         if (datosTabla.nombre) contenido.append(crear("h2", datosTabla.nombre));
         contenido.append(tabla(datosTabla, abrir));

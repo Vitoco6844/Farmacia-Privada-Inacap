@@ -1,0 +1,113 @@
+/* Modo nocturno «botica de noche»: verdes profundos en lugar del gris azulado genérico.
+   Se activa con <html data-tema="oscuro"> (ver js/tema.js). Contrastes de texto ≥ 4.5:1 sobre las superficies. */
+:root[data-tema="oscuro"]{
+  color-scheme:dark;
+  --green:#4cc9a3;--green-dark:#8be0c3;--ink:#e3ece8;--muted:#9bb0a7;--line:#2a3b35;--bg:#0d1412;
+  --superficie:#141e1b;--elevada:#1a2622;--hundida:#101916;--borde-campo:#35493f;--texto-campo:#dbe6e1;
+  --acento-suave:#173229;--acento-borde:#24523f;--peligro:#f2988b;--peligro-suave:#3a1f1b;--ambar:#e8bd6a;--ambar-suave:#352a14;
+}
+:root[data-tema="oscuro"] body{background:var(--bg);color:var(--ink)}
+:root[data-tema="oscuro"] a{color:var(--green)}
+:root[data-tema="oscuro"] :is(button,a,input,select,[tabindex]):focus-visible{outline-color:#6fd4b4}
+
+/* Estructura */
+:root[data-tema="oscuro"] :is(.sidebar,.topbar){background:var(--superficie);border-color:var(--line)}
+:root[data-tema="oscuro"] .skip-link{background:var(--elevada);color:var(--ink)}
+:root[data-tema="oscuro"] .brand{color:var(--green-dark)}
+:root[data-tema="oscuro"] .brand-icon{background:#2e9f7f;color:#04130e}
+:root[data-tema="oscuro"] :is(.brand-subtitle,.nav-heading,.breadcrumb span){color:#7f968c}
+:root[data-tema="oscuro"] .workspace{border-color:var(--line)}
+:root[data-tema="oscuro"] .workspace-icon{background:var(--acento-suave);color:var(--green)}
+:root[data-tema="oscuro"] .nav-item{color:#b4c6be}
+:root[data-tema="oscuro"] .nav-item:hover{background:var(--elevada);color:var(--ink)}
+:root[data-tema="oscuro"] :is(.nav-item.selected,.sidebar .nav-item[aria-current="page"]){background:var(--acento-suave);color:var(--green-dark)}
+:root[data-tema="oscuro"] .sidebar-footer{color:#a9bcb3}
+:root[data-tema="oscuro"] .demo-dot{background:var(--green)}
+:root[data-tema="oscuro"] .breadcrumb strong{color:var(--ink)}
+:root[data-tema="oscuro"] .avatar{background:var(--acento-suave);border-color:var(--acento-borde);color:var(--green-dark)}
+:root[data-tema="oscuro"] .page-footer{color:#7f968c}
+
+/* Superficies: tarjetas, paneles y diálogos */
+:root[data-tema="oscuro"] :is(.stat,.catalog-panel,.metric,.login-card,dialog,.panel,.resumen div,.commerce-card,
+  .clinica .form-card,.clinica .table-card,#compras>.tabla,#inventario>.tabla,#datos-operacion>.tabla,.purchase-row){
+  background:var(--superficie);border-color:var(--line);color:var(--ink);box-shadow:none}
+:root[data-tema="oscuro"] dialog::backdrop{background:#000a}
+:root[data-tema="oscuro"] .stat-icon{background:#17262c;color:#8fc1d6}
+:root[data-tema="oscuro"] .stat-icon.green{background:var(--acento-suave);color:var(--green)}
+:root[data-tema="oscuro"] .stat-icon.amber{background:var(--ambar-suave);color:var(--ambar)}
+:root[data-tema="oscuro"] :is(.stat small,.catalog-note,.pagination,.code,.product small,th){color:var(--muted)}
+:root[data-tema="oscuro"] .count{background:var(--acento-suave);border-color:var(--acento-borde);color:var(--green)}
+
+/* Botones */
+:root[data-tema="oscuro"] :is(.button,#contenido button:not(.button)){background:var(--elevada);border-color:var(--borde-campo);color:var(--green-dark)}
+:root[data-tema="oscuro"] .button:hover{background:#21302b}
+:root[data-tema="oscuro"] :is(.button.primary,#contenido button[type="submit"]:not(.button),#contenido #nueva-orden,.pagination nav .current){
+  background:#2e9f7f;border-color:#2e9f7f;color:#04130e}
+:root[data-tema="oscuro"] .button.primary:hover{background:#3db590}
+:root[data-tema="oscuro"] .button.danger{color:var(--peligro);border-color:#6b3a33}
+:root[data-tema="oscuro"] .filter-button{background:var(--acento-suave)}
+:root[data-tema="oscuro"] :is(.actions button,.actions a){color:var(--green)}
+
+/* Formularios */
+:root[data-tema="oscuro"] :is(input,select,textarea),
+:root[data-tema="oscuro"] #contenido :is(.panel,#buscar-stock,.carrito) :is(input,select,textarea),
+:root[data-tema="oscuro"] .revision-modulo .filters input,:root[data-tema="oscuro"] .login-card input{
+  background:var(--hundida);border-color:var(--borde-campo);color:var(--texto-campo)}
+:root[data-tema="oscuro"] input::placeholder{color:#738a80}
+:root[data-tema="oscuro"] :is(input,select):disabled,:root[data-tema="oscuro"] .form-field :is(input,select):disabled{background:#121a17;color:#8ea39a}
+:root[data-tema="oscuro"] label{color:#b9cbc3}
+:root[data-tema="oscuro"] :is(fieldset,.seleccion-roles fieldset,.clinica fieldset){border-color:var(--line)}
+:root[data-tema="oscuro"] input[type=checkbox]{accent-color:#2e9f7f}
+
+/* Tablas */
+:root[data-tema="oscuro"] thead{background:var(--hundida);border-color:var(--line)}
+:root[data-tema="oscuro"] td{border-color:#21302b;color:#c9d7d1}
+:root[data-tema="oscuro"] tbody tr:hover{background:#17221f}
+:root[data-tema="oscuro"] :is(.product strong,.price,.pagination strong){color:var(--ink)}
+:root[data-tema="oscuro"] :is(.product-icon,.product-icon.blue){background:var(--elevada);border-color:var(--line);color:var(--green)}
+:root[data-tema="oscuro"] .pagination nav :is(a,span){background:var(--elevada);border-color:var(--line);color:#b4c6be}
+:root[data-tema="oscuro"] .pagination nav .disabled{background:var(--hundida);color:#55675f}
+
+/* Estados, insignias y avisos */
+:root[data-tema="oscuro"] .condition{background:var(--elevada);color:#b4c6be}
+:root[data-tema="oscuro"] .condition.prescription{background:var(--ambar-suave);color:var(--ambar)}
+:root[data-tema="oscuro"] .condition.alert{background:var(--peligro-suave);color:var(--peligro)}
+:root[data-tema="oscuro"] .status{color:var(--green)}
+:root[data-tema="oscuro"] .status.inactive{color:#8a9a93}
+:root[data-tema="oscuro"] .feedback{background:var(--acento-suave);border-color:var(--acento-borde);color:#cdeee2}
+:root[data-tema="oscuro"] .feedback.error{background:var(--peligro-suave);border-color:#6b3a33;color:#ffc9c0}
+:root[data-tema="oscuro"] :is(.field-error,.errorlist,.deactivation summary,.confirmacion-cuenta summary){color:var(--peligro)}
+:root[data-tema="oscuro"] :is(.receta-detalle,.recetas-lista) .badge.estado-pendiente{background:var(--ambar-suave);color:var(--ambar)}
+:root[data-tema="oscuro"] :is(.receta-detalle,.recetas-lista) .badge.estado-rechazada{background:var(--peligro-suave);color:var(--peligro)}
+:root[data-tema="oscuro"] .recetas-lista .badge.estado-aprobada{background:var(--acento-suave);color:var(--green)}
+:root[data-tema="oscuro"] .registro-clinico .registro-inactivo{background:var(--hundida)}
+:root[data-tema="oscuro"] .commerce-result:hover{background:var(--acento-suave)}
+:root[data-tema="oscuro"] :is(.trend-track){background:var(--elevada)}
+:root[data-tema="oscuro"] :is(.deactivation,.report-actions){border-color:var(--line)}
+
+/* Hojas propias de los módulos (comercio y clínica), que fijan colores con mayor especificidad */
+:root[data-tema="oscuro"] #pos #vacio,:root[data-tema="oscuro"] .commerce-result{background:var(--hundida);color:var(--muted);border-color:var(--line)}
+:root[data-tema="oscuro"] #pos #total{color:var(--green-dark)}
+:root[data-tema="oscuro"] #pos .commerce-totals,:root[data-tema="oscuro"] .commerce-card :is(th,td){border-color:var(--line)}
+:root[data-tema="oscuro"] .commerce-card :is(input,select,textarea),
+:root[data-tema="oscuro"] .clinica :is(input:not([type=checkbox]):not([type=hidden]),select,textarea){background:var(--hundida);border-color:var(--borde-campo);color:var(--texto-campo)}
+:root[data-tema="oscuro"] :is(.commerce-card .muted,.receta-detalle .saldo-agotado,.recetas-lista td[colspan]){color:var(--muted)}
+:root[data-tema="oscuro"] .clinica .badge{background:var(--acento-suave);color:var(--green)}
+:root[data-tema="oscuro"] .clinica .errorlist{color:var(--peligro)}
+:root[data-tema="oscuro"] .registro-clinico .registro-inactivo{color:var(--muted)}
+
+/* Interruptor de tema (claro / nocturno) */
+.tema-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;color:inherit;
+  border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tema-toggle:hover{border-color:var(--green)}
+.tema-toggle .tema-icono{display:inline-block;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 70% 30%,transparent 42%,currentColor 44%)}
+:root[data-tema="oscuro"] .tema-toggle .tema-icono{background:currentColor;box-shadow:0 0 0 3px #4cc9a333}
+.tema-flotante{position:fixed;right:16px;bottom:16px;z-index:20;background:var(--superficie,#fff)}
+@media print{.tema-toggle{display:none!important}}
+@media (prefers-reduced-motion:no-preference){:root{transition:none}body,.sidebar,.topbar,.catalog-panel,.stat{transition:background-color .2s ease,border-color .2s ease}}
+
+/* Gráficos del panel en modo nocturno (paleta validada contra la superficie #141E1B). */
+:root[data-tema="oscuro"]{--g-barra:#229C73;--g-tenue:#1F4D3D;--g-ok:#229C73;--g-bajo:#B8891A;--g-agotado:#C93F5A;--g-tip:#E3ECE8;--g-tip-texto:#0D1412}
+:root[data-tema="oscuro"] .barra-pista{background:var(--elevada)}
+:root[data-tema="oscuro"] .grafico-datos summary{color:var(--green)}

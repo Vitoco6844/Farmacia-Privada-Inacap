@@ -9,3 +9,5 @@ Preparación local del proyecto académico de Vicente Durán e Ignacio Aqueveque
 | [docs](docs/) | Alcance, Kanban, decisiones y material previo de referencia. |
 
 Empezar por la [matriz de alcance](docs/matriz-alcance.md), el [tablero Kanban](docs/kanban.md) y las [decisiones pendientes](docs/decisiones.md). Para levantar esta entrega, seguir la [guía de PostgreSQL local](docs/postgresql-local.md). El README del backend describe el prototipo anterior.
+
+Los cambios de funcionalidad y los cambios visuales del 23 y 24/11/2026 (correcciones, validación de RUT, duplicados eliminados, modo nocturno y gráficos del panel) están en [CAMBIOS.md](CAMBIOS.md).

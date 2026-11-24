@@ -9,7 +9,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.utils import timezone
 from catalogo.models import Producto
-from .models import DetalleVenta, Existencia, Lote, Movimiento, Ubicacion, Venta
+from .models import Existencia, Lote, Movimiento, Ubicacion
 
 
 def _actor(usuario, permiso):
@@ -91,42 +91,3 @@ def transferir(*, usuario, lote_id, origen, destino, cantidad, clave):
     stock_destino.save(update_fields=['cantidad'])
     return Movimiento.objects.create(clave=clave, lote=lote, tipo=Movimiento.Tipo.TRASLADO,
         origen=origen, destino=destino, cantidad=cantidad, usuario=actor)
-
-
-@transaction.atomic
-def confirmar_venta(*, usuario, producto_id, cantidad, clave):
-    actor = _actor(usuario, 'operaciones.add_venta')
-    _cantidad(cantidad)
-    previa = Venta.objects.filter(clave=clave).first()
-    if previa:
-        detalle = previa.detalles.get()
-        if previa.usuario_id != actor.pk or detalle.producto_id != producto_id or detalle.cantidad != cantidad:
-            raise ValidationError('La operación ya se utilizó con otros datos. Abre una venta nueva.')
-        return previa
-    producto = Producto.objects.select_for_update().get(pk=producto_id)
-    if not producto.activo:
-        raise ValidationError('El producto está inactivo.')
-    if producto.condicion != Producto.Condicion.DIRECTA:
-        raise ValidationError('Esta venta rápida solo admite venta directa. Recetas y condiciones pendientes están bloqueadas.')
-    if producto.precio * cantidad > 99999999999999:
-        raise ValidationError('El importe supera el máximo admitido por una venta rápida.')
-    stocks = list(Existencia.objects.select_for_update(of=('self',)).select_related('lote').filter(
-        lote__producto=producto, lote__bloqueado=False, lote__vencimiento__gt=timezone.localdate(),
-        ubicacion=Ubicacion.VITRINA, cantidad__gt=0,
-    ).order_by('lote__vencimiento', 'lote_id'))
-    if sum(stock.cantidad for stock in stocks) < cantidad:
-        raise ValidationError('Stock disponible insuficiente en vitrina. Revisa los lotes o registra un traslado.')
-    venta = Venta.objects.create(clave=clave, usuario=actor, total=producto.precio * cantidad)
-    detalle = DetalleVenta.objects.create(venta=venta, producto=producto, codigo=producto.codigo,
-        nombre=producto.nombre, precio_unitario=producto.precio, cantidad=cantidad)
-    pendiente = cantidad
-    for stock in stocks:
-        tomar = min(stock.cantidad, pendiente)
-        stock.cantidad -= tomar
-        stock.save(update_fields=['cantidad'])
-        Movimiento.objects.create(lote=stock.lote, tipo=Movimiento.Tipo.VENTA, origen=Ubicacion.VITRINA,
-            cantidad=tomar, usuario=actor, detalle_venta=detalle)
-        pendiente -= tomar
-        if not pendiente:
-            break
-    return venta

@@ -14,6 +14,14 @@ def exigir_qf(usuario, permiso):
 def revisar_receta(*, usuario, receta, aprobar, nota=''):
     exigir_qf(usuario,'revisar_receta')
     receta=Receta.objects.select_for_update().get(pk=receta.pk)
+    # Una decisión profesional no se sobrescribe sin control: solo se aprueba lo pendiente, el rechazo es
+    # definitivo y revocar una aprobación (p. ej. por error detectado) exige dejar el motivo registrado.
+    if receta.estado=='rechazada':
+        raise ValidationError('La receta ya fue rechazada; si corresponde, registra una receta nueva.')
+    if aprobar and receta.estado!='pendiente':
+        raise ValidationError('La receta ya está aprobada.')
+    if not aprobar and receta.estado=='aprobada' and not nota.strip():
+        raise ValidationError('Para revocar una receta aprobada indica el motivo en Observaciones.')
     if aprobar and (not receta.lineas.exists() or receta.emitida > timezone.localdate() or receta.vence < timezone.localdate()):
         raise ValidationError('La receta debe tener productos y estar vigente.')
     receta.estado='aprobada' if aprobar else 'rechazada'

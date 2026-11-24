@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
-from config.respuestas import render
+from config.respuestas import id_numerico, render
 from django.http import JsonResponse
 from django.utils import timezone
 from catalogo.models import Producto
@@ -17,6 +17,11 @@ class ConvenioForm(forms.ModelForm):
         model=Convenio
         fields=['nombre','inicio','fin','porcentaje','tope','activo']
         widgets={'inicio':forms.DateInput(attrs={'type':'date'},format='%Y-%m-%d'),'fin':forms.DateInput(attrs={'type':'date'},format='%Y-%m-%d')}
+    def clean(self):
+        datos=super().clean()
+        if datos.get('inicio') and datos.get('fin') and datos['fin']<datos['inicio']:
+            self.add_error('fin','La fecha de término no puede ser anterior a la de inicio.')
+        return datos
 
 @permission_required('operaciones.add_venta',raise_exception=True)
 def buscar(request):
@@ -53,7 +58,7 @@ def caja(request):
 
 @permission_required('comercio.view_convenio',raise_exception=True)
 def convenios(request):
-    seleccionado=get_object_or_404(Convenio,pk=request.GET['editar']) if request.GET.get('editar') else None
+    seleccionado=get_object_or_404(Convenio,pk=id_numerico(request.GET['editar'])) if request.GET.get('editar') else None
     form=ConvenioForm(request.POST or None,instance=seleccionado)
     if request.method=='POST':
         from django.core.exceptions import PermissionDenied

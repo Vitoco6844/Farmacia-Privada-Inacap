@@ -107,10 +107,11 @@ def receta(request, c):
     es_qf = c['es_qf']
     lineas = list(r.lineas.select_related('producto'))
     formularios = []
-    if es_qf and usuario.has_perm('clinica.revisar_receta'):
-        formularios.append(formulario('Registrar revisión', [fijo('accion', 'revisar'),
-            seleccionar('decision', 'Decisión profesional', [('aprobar', 'Aprobar'), ('rechazar', 'Rechazar')]),
-            campo('nota', 'Observación', 'textarea', maxLength=500)]))
+    if es_qf and usuario.has_perm('clinica.revisar_receta') and r.estado != 'rechazada':
+        decisiones = [('aprobar', 'Aprobar'), ('rechazar', 'Rechazar')] if r.estado == 'pendiente' else [('rechazar', 'Revocar aprobación')]
+        formularios.append(formulario('Registrar revisión' if r.estado == 'pendiente' else 'Revocar aprobación', [fijo('accion', 'revisar'),
+            seleccionar('decision', 'Decisión profesional', decisiones),
+            campo('nota', 'Observación (obligatoria para revocar)', 'textarea', maxLength=500)]))
     controlados = [(o.pk, str(o.producto)) for o in lineas if o.producto.condicion == 'Receta retenida']
     if r.estado == 'aprobada' and controlados and es_qf and usuario.has_perm('clinica.autorizar_controlado'):
         formularios.append(formulario('Autorizar controlado', [fijo('accion', 'autorizar'),

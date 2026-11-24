@@ -2,13 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required,permission_required
 from django.core.exceptions import ValidationError,PermissionDenied
 from django.db import transaction
-from django.http import FileResponse
+from django.http import FileResponse,Http404
 from django.shortcuts import redirect,get_object_or_404
 from config.respuestas import render
 from django.views.decorators.http import require_POST
 from .models import *
 from .forms import *
 from .services import *
+from config.respuestas import id_numerico
 
 @login_required
 @permission_required('clinica.view_receta',raise_exception=True)
@@ -64,7 +65,7 @@ def receta_detalle(request,pk):
 @permission_required('clinica.gestionar_clinica',raise_exception=True)
 def personas(request,tipo='paciente'):
     clase,formulario=(Paciente,PacienteForm) if tipo=='paciente' else (Prescriptor,PrescriptorForm)
-    objeto=get_object_or_404(clase,pk=request.GET['editar']) if request.GET.get('editar') else None
+    objeto=get_object_or_404(clase,pk=id_numerico(request.GET['editar'])) if request.GET.get('editar') else None
     form=formulario(request.POST or None,instance=objeto)
     if request.method=='POST' and form.is_valid():
         form.save(); messages.success(request,'Registro guardado.'); return redirect(request.path)
@@ -74,6 +75,7 @@ def personas(request,tipo='paciente'):
 @permission_required('clinica.descargar_adjunto',raise_exception=True)
 def descargar(request,pk):
     adjunto=get_object_or_404(AdjuntoReceta,pk=pk)
+    if adjunto.estado=='rechazado': raise Http404('Documento rechazado.')
     response=FileResponse(adjunto.archivo.open('rb'),as_attachment=True,filename=adjunto.nombre,content_type='application/octet-stream')
     response['Cache-Control']='private, no-store'; response['X-Content-Type-Options']='nosniff'
     EventoClinico.objects.create(receta=adjunto.receta,usuario=request.user,accion='descarga_adjunto',detalle={'adjunto':adjunto.pk})
@@ -88,7 +90,7 @@ def imprimir(request,pk):
 @permission_required('clinica.view_asientocontrolado',raise_exception=True)
 def controlados(request):
     if request.method=='POST':
-        try: compensar_asiento(usuario=request.user,asiento_id=request.POST.get('asiento'),motivo=request.POST.get('motivo',''))
+        try: compensar_asiento(usuario=request.user,asiento_id=id_numerico(request.POST.get('asiento'),AsientoControlado.DoesNotExist),motivo=request.POST.get('motivo',''))
         except (ValidationError,AsientoControlado.DoesNotExist) as exc: messages.error(request,' '.join(exc.messages) if isinstance(exc,ValidationError) else 'Asiento inexistente.')
         else: messages.success(request,'Compensación registrada. El original permanece; esta corrección no revierte la entrega ni el stock.')
         return redirect('clinica:controlados')

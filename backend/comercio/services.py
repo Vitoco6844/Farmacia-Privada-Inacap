@@ -91,6 +91,10 @@ def confirmar_venta(*, usuario, items, clave, caja_id, medio='efectivo', conveni
     receptor, rut = receptor.strip(), rut.strip()
     if len(receptor)>160 or len(rut)>20: raise ValidationError('Datos de receptor demasiado largos.')
     if tipo_documento == 'factura' and (not receptor or not rut): raise ValidationError('La factura requiere razón social y RUT.')
+    if rut:
+        from config.rut import normalizar_rut
+        try: rut = normalizar_rut(rut)
+        except ValidationError as error: raise ValidationError(f'RUT del receptor: {error.messages[0]}')
     solicitud = dict(items=items,caja_id=int(caja_id),medio=medio,convenio_id=convenio_id,descuento=str(descuento.normalize()),receta_id=receta_id,retirante_id=retirante_id,autorizacion_retiro=autorizacion_retiro,tipo_documento=tipo_documento,receptor=receptor,rut=rut)
     previa = Venta.objects.filter(clave=clave).first()
     if previa:

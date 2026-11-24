@@ -59,7 +59,7 @@ class EventoCatalogo(models.Model):
     """Historial sin interfaz de edición o borrado para usuarios operativos."""
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT, related_name='eventos')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    accion = models.CharField(max_length=20, choices=[('crear', 'Crear'), ('editar', 'Editar'), ('desactivar', 'Desactivar')])
+    accion = models.CharField(max_length=20, choices=[('crear', 'Crear'), ('editar', 'Editar'), ('desactivar', 'Desactivar'), ('reactivar', 'Reactivar')])
     fecha = models.DateTimeField(auto_now_add=True)
     anterior = models.JSONField(default=dict)
     posterior = models.JSONField(default=dict)

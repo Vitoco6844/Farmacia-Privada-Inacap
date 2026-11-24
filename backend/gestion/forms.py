@@ -3,12 +3,13 @@ from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 from catalogo.models import Categoria, Producto
+from config.rut import normalizar_rut
 from .models import Trabajador, PoliticaPrecio, PrecioProgramado, ConfiguracionAlerta
 from .services import ROLES
 
 
 class UsuarioForm(forms.ModelForm):
-    rut = forms.CharField(label='RUT', max_length=12, help_text='Sin puntos y con guion; se valida el dígito verificador.')
+    rut = forms.CharField(label='RUT', max_length=12, help_text='Con o sin puntos, por ejemplo 12.345.678-5. Se valida el dígito verificador.')
     telefono = forms.CharField(label='Teléfono', max_length=30)
     grupos = forms.ModelMultipleChoiceField(label='Roles', queryset=Group.objects.filter(name__in=ROLES), required=False,
         widget=forms.CheckboxSelectMultiple, help_text='Marca los roles que corresponden al trabajador. Sin roles no tendrá acceso a las operaciones.')
@@ -32,14 +33,7 @@ class UsuarioForm(forms.ModelForm):
                 self.initial.update(rut=perfil.rut, telefono=perfil.telefono)
 
     def clean_rut(self):
-        rut = self.cleaned_data['rut'].replace('.', '').upper().strip()
-        partes = rut.split('-')
-        if len(partes) != 2 or not partes[0].isdigit() or not 7 <= len(partes[0]) <= 8:
-            raise ValidationError('Usa el formato 12345678-5.')
-        suma = sum(int(n) * (2 + i % 6) for i, n in enumerate(reversed(partes[0])))
-        dv = 11 - suma % 11
-        if partes[1] != ('K' if dv == 10 else '0' if dv == 11 else str(dv)):
-            raise ValidationError('El dígito verificador del RUT no coincide.')
+        rut = normalizar_rut(self.cleaned_data['rut'])
         if Trabajador.objects.filter(rut=rut).exclude(usuario_id=self.instance.pk).exists():
             raise ValidationError('Este RUT ya tiene una cuenta.')
         return rut
@@ -57,6 +51,12 @@ class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = ['nombre']
+
+    def clean_nombre(self):
+        nombre = ' '.join(self.cleaned_data['nombre'].split())
+        if Categoria.objects.filter(nombre__iexact=nombre).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('Ya existe una categoría con ese nombre (sin distinguir mayúsculas).')
+        return nombre
 
 
 class PoliticaForm(forms.ModelForm):

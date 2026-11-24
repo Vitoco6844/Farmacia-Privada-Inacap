@@ -21,3 +21,38 @@
 
 /* Todos los enlaces usan la misma columna de iconos y altura mínima. */
 .sidebar .nav-item{min-height:44px;line-height:1.4;flex-shrink:0}.sidebar .nav-item>span:first-child{flex:0 0 20px;line-height:1;text-align:center}.sidebar>nav{flex-shrink:0}
+
+/* Gráficos del panel del turno. Colores validados para daltonismo (claro y nocturno): ver CAMBIOS.md.
+   --g-barra: serie principal · --g-tenue: días anteriores y barras atenuadas · --g-ok/--g-bajo/--g-agotado: estados. */
+:root{--g-barra:#078560;--g-tenue:#B5DCCB;--g-ok:#078560;--g-bajo:#B87A00;--g-agotado:#B23A2B;--g-tip:#13302A;--g-tip-texto:#fff}
+.graficos-turno{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:22px;margin-bottom:22px}.graficos-turno .catalog-panel{margin-bottom:0}
+.grafico{display:flex;flex-direction:column;overflow:visible}.grafico .panel-title{align-items:flex-start}.grafico .panel-title p{font-size:12px}
+.grafico-columnas{display:flex;align-items:stretch;gap:12px;height:220px;padding:38px 24px 30px;box-sizing:border-box;border-bottom:1px solid var(--line);margin:0 0 4px}
+.grafico-columnas .columna{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;min-width:0;outline:none;cursor:default}
+.columna-barra{display:block;width:100%;max-width:64px;margin:0 auto;border-radius:4px 4px 0 0;background:var(--g-barra);transition:opacity .15s}
+.semana .columna .columna-barra{background:var(--g-tenue)}.semana .columna.destacada .columna-barra{background:var(--g-barra)}
+.grafico-columnas:hover .columna:not(:hover) .columna-barra,.grafico-columnas:focus-within .columna:not(:focus) .columna-barra{opacity:.45}
+.columna-eje{position:absolute;left:0;right:0;bottom:-24px;text-align:center;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.semana .destacada .columna-eje{color:var(--ink);font-weight:700}
+.columna-valor{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.columna-tip{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);z-index:3;white-space:nowrap;padding:6px 10px;border-radius:7px;background:var(--g-tip);color:var(--g-tip-texto);font-size:12px;font-weight:600;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s}
+.columna:hover>.columna-tip,.columna:focus>.columna-tip,.segmento:hover>.columna-tip,.segmento:focus>.columna-tip{opacity:1;visibility:visible}
+.grafico-columnas .columna .columna-tip{bottom:auto;top:-34px}
+.columna:focus-visible,.segmento:focus-visible,.grafico-barras li:focus-visible{outline:3px solid #91bbd1;outline-offset:2px}
+.grafico-datos{padding:10px 24px 18px;font-size:12px}.grafico-datos summary{cursor:pointer;color:var(--green);font-weight:600}.grafico-datos table{margin-top:8px;white-space:nowrap}.grafico-datos td,.grafico-datos th{padding:8px 10px}
+.grafico-vacio{margin:0;padding:30px 24px;color:var(--muted);line-height:1.6;font-size:13px}
+.grafico-segmentos{display:flex;gap:2px;height:30px;margin:6px 24px 0}.segmento{position:relative;flex-basis:0;outline:none}.segmento:first-child{border-radius:4px 0 0 4px}.segmento:last-child{border-radius:0 4px 4px 0}.segmento:only-child{border-radius:4px}
+.segmento .columna-tip{white-space:normal;width:max-content;max-width:280px;line-height:1.5}
+.estado-ok{background:var(--g-ok)}.estado-bajo{background:var(--g-bajo)}.estado-agotado{background:var(--g-agotado)}
+.grafico-leyenda{list-style:none;margin:0;padding:16px 24px 22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grafico-leyenda li{display:grid;grid-template-columns:22px 1fr;column-gap:8px;font-size:12px;color:var(--muted);align-items:baseline}
+.grafico-leyenda strong{font-size:20px;color:var(--ink);margin-right:4px;font-variant-numeric:tabular-nums}.grafico-leyenda small{grid-column:2;margin-top:3px;line-height:1.5}
+.grafico-leyenda .marca{grid-row:1/span 2;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+.grafico-barras{list-style:none;margin:0;padding:10px 24px 24px;display:flex;flex-direction:column;gap:14px}
+.grafico-barras li{display:grid;grid-template-columns:110px minmax(0,1fr) 120px;gap:12px;align-items:center;outline:none}
+.barra-nombre{font-size:13px;font-weight:600;color:var(--ink)}.barra-pista{height:26px;background:#eef3f0;border-radius:4px;overflow:hidden}.barra-relleno{display:block;height:100%;background:var(--g-barra);border-radius:0 4px 4px 0}
+.barra-valor{text-align:right;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink)}.barra-valor small{color:var(--muted);margin-left:4px}
+.grafico-barras:hover li:not(:hover) .barra-relleno{opacity:.45}
+@media(max-width:520px){.grafico-leyenda{grid-template-columns:1fr}.grafico-barras li{grid-template-columns:90px minmax(0,1fr);}.barra-valor{grid-column:1/-1;text-align:left}.grafico-columnas{gap:6px;padding-left:12px;padding-right:12px}}
+@media print{.columna-tip{display:none}.grafico-datos{display:none}}
+.columna:hover>.columna-valor,.columna:focus>.columna-valor{visibility:hidden}

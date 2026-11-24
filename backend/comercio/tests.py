@@ -79,7 +79,7 @@ class ComercioTests(TestCase):
         self.assertEqual(resumen_caja(self.caja)['esperado'],9900)
         with self.assertRaises(ValidationError):mover_caja(**{**args,'clave':uuid.uuid4(),'monto':10001})
     def test_documento_fallo_reintento_sin_duplicar(self):
-        venta=self.venta(tipo_documento='factura',receptor='Empresa ficticia',rut='12345678-9')
+        venta=self.venta(tipo_documento='factura',receptor='Empresa ficticia',rut='12.345.678-5')
         doc=emitir_documento(usuario=self.user,documento_id=venta.documento.pk,simular_error=True)
         self.assertEqual(doc.estado,'error')
         doc=emitir_documento(usuario=self.user,documento_id=doc.pk)
